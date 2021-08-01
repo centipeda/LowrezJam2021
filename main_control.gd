@@ -64,6 +64,16 @@ func _launch():
         var _dir = (get_global_mouse_position() - $GolfBall.position).normalized()
         $GolfBall.apply_impulse(Vector2(), _dir*hit_strength)
 
+func _consume_pickup(pickup):
+    print("consuming")
+    if pickup.is_in_group("booster_pickup"):
+        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*50)
+    elif pickup.is_in_group("turner_l_pickup"):
+        $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
+        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
+    elif pickup.is_in_group("turner_r_pickup"):
+        $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(-90))
+        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
 
 func _on_ChargeTimer_timeout():
     # restart the timer if we're not maxed out yet
@@ -71,3 +81,7 @@ func _on_ChargeTimer_timeout():
         charge_nodes[charges].value = 100
         charges += 1
         charge_timer.start()
+
+func _on_pickup_entered(area):
+    _consume_pickup(area)
+    
