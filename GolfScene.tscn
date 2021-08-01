@@ -39,6 +39,8 @@ hit_strength = 100.0
 charge_one_path = NodePath("GuiRoot/ChargeContainer/Charge1")
 charge_two_path = NodePath("GuiRoot/ChargeContainer/Charge2")
 charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
+active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
+inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 
 [node name="GolfBall" type="RigidBody2D" parent="."]
 position = Vector2( 32, 48 )
@@ -81,11 +83,13 @@ __meta__ = {
 }
 
 [node name="ChargeContainer" type="HBoxContainer" parent="GuiRoot"]
+margin_left = -1.0
 margin_top = 1.0
-margin_right = 31.0
+margin_right = 30.0
 margin_bottom = 7.0
 custom_constants/separation = -1
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -168,12 +172,12 @@ position = Vector2( 19, 37 )
 [node name="TurnerLeft" parent="Pickups" groups=[
 "turner_l_pickup",
 ] instance=ExtResource( 1 )]
-position = Vector2( 32, 16 )
+position = Vector2( 50, 27 )
 
 [node name="TurnerRight" parent="Pickups" groups=[
 "turner_r_pickup",
 ] instance=ExtResource( 1 )]
-position = Vector2( 49, 24 )
+position = Vector2( 32, 16 )
 
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]

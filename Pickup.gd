@@ -9,6 +9,8 @@ func _ready():
     # connect this scene to its parent so it can signal the main scene...
     # this seems somehow hacky, but I can't figure a better way to do it
     connect("pickup_entered", get_parent(), "_on_pickup_body_entered")
+    # the effect of the pickup (and its color) is determined by which tag
+    # the pickup has on it
     if is_in_group("booster_pickup"):
         color = Color.red
     elif is_in_group("turner_r_pickup"):
