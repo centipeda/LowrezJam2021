@@ -1,0 +1,156 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://main_control.gd" type="Script" id=3]
+
+[sub_resource type="PhysicsMaterial" id=4]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 4, 32 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32, 4 )
+
+[sub_resource type="Theme" id=5]
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0627451, 0.423529, 0.0823529, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
+
+[node name="GolfScene" type="Node2D"]
+script = ExtResource( 3 )
+charge_timer_path = NodePath("ChargeTimer")
+hit_strength = 100.0
+charge_one_path = NodePath("GuiRoot/ChargeContainer/Charge1")
+charge_two_path = NodePath("GuiRoot/ChargeContainer/Charge2")
+charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
+
+[node name="GolfBall" type="RigidBody2D" parent="."]
+position = Vector2( 32, 48 )
+physics_material_override = SubResource( 4 )
+gravity_scale = 0.0
+linear_damp = 1.5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="BallCollider" type="CollisionShape2D" parent="GolfBall"]
+shape = SubResource( 1 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2( -4, 32 )
+shape = SubResource( 2 )
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 68, 32 )
+shape = SubResource( 2 )
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, -4 )
+shape = SubResource( 3 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, 68 )
+shape = SubResource( 3 )
+
+[node name="GuiRoot" type="Control" parent="."]
+margin_left = 1.0
+margin_right = 65.0
+margin_bottom = 64.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeContainer" type="HBoxContainer" parent="GuiRoot"]
+margin_top = 1.0
+margin_right = 31.0
+margin_bottom = 7.0
+custom_constants/separation = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Charge1" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_right = 11.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge1"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+value = 100.0
+percent_visible = false
+
+[node name="Charge2" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_left = 10.0
+margin_right = 21.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge2"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+value = 100.0
+percent_visible = false
+
+[node name="Charge3" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_left = 20.0
+margin_right = 31.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 5 )
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge3"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+value = 100.0
+percent_visible = false
+
+[node name="ChargeTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
