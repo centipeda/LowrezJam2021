@@ -9,12 +9,22 @@ export(NodePath) var charge_three_path
 export(Color) var active_guide_color
 export(Color) var inactive_guide_color
 
+export(NodePath) var score_path
+
 var clicked = false
 var max_charges = 3
 var charges = 3
 var charge_nodes
 var charge_timer
 var guide_color
+var score = 0
+var score_node
+var pickup_types = [
+    "basic_pickup",
+    "booster_pickup",
+    "turner_l_pickup",
+    "turner_r_pickup"
+   ]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,6 +32,7 @@ func _ready():
     charge_nodes = [get_node(charge_one_path).get_child(0),
                     get_node(charge_two_path).get_child(0), 
                     get_node(charge_three_path).get_child(0)]
+    score_node = get_node(score_path)
 
 func _input(event):
     # check for mouse clicks
@@ -53,6 +64,7 @@ func _process(_delta):
     if charges < max_charges:
         var _charge_progress = (charge_timer.wait_time - charge_timer.time_left) / charge_timer.wait_time * 100
         charge_nodes[charges].value = _charge_progress
+    score_node.text = str(score)
     update()
 
 func _launch():
@@ -75,13 +87,15 @@ func _launch():
 func _consume_pickup(pickup):
     print("consuming")
     if pickup.is_in_group("booster_pickup"):
-        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*50)
+        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*100)
     elif pickup.is_in_group("turner_l_pickup"):
         $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(-90))
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
     elif pickup.is_in_group("turner_r_pickup"):
         $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
+    pickup.queue_free()
+    score += 1
 
 func _on_ChargeTimer_timeout():
     # restart the timer if we're not maxed out yet
@@ -90,6 +104,9 @@ func _on_ChargeTimer_timeout():
         charges += 1
         charge_timer.start()
 
+func _on_SpawnTimer_timeout():
+    print($Pickups.get_child_count())
+    $Pickups.add_pickup(pickup_types[randi() % len(pickup_types)])
+
 func _on_pickup_entered(area):
     _consume_pickup(area)
-    
