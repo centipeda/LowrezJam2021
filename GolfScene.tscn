@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
 [ext_resource path="res://main_control.gd" type="Script" id=3]
+[ext_resource path="res://Pixels.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.5
@@ -31,6 +32,15 @@ bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+extra_spacing_space = -2
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=10]
+
+[sub_resource type="DynamicFont" id=11]
+font_data = ExtResource( 4 )
 
 [node name="GolfScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -76,6 +86,34 @@ shape = SubResource( 4 )
 [node name="Bottom" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 32, 68 )
 shape = SubResource( 4 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ChargeTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Pickups" type="Node2D" parent="."]
+script = ExtResource( 2 )
+pickup_proto = ExtResource( 1 )
+
+[node name="Booster" parent="Pickups" groups=[
+"booster_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 19, 37 )
+
+[node name="TurnerLeft" parent="Pickups" groups=[
+"turner_l_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 50, 27 )
+
+[node name="TurnerRight" parent="Pickups" groups=[
+"turner_r_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 32, 16 )
+
+[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
+position = Vector2( 11, 17 )
 
 [node name="GuiRoot" type="Control" parent="."]
 margin_left = 2.0
@@ -180,34 +218,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SpawnTimer" type="Timer" parent="."]
-autostart = true
+[node name="GameOver" type="Panel" parent="GuiRoot"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_right = -2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ChargeTimer" type="Timer" parent="."]
-one_shot = true
+[node name="Label" type="Label" parent="GuiRoot/GameOver"]
+margin_top = 24.0
+margin_right = 64.0
+margin_bottom = 51.0
+custom_fonts/font = SubResource( 9 )
+text = "game over
+click to restart"
+align = 1
 
-[node name="Pickups" type="Node2D" parent="."]
-script = ExtResource( 2 )
-pickup_proto = ExtResource( 1 )
-
-[node name="Booster" parent="Pickups" groups=[
-"booster_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 19, 37 )
-
-[node name="TurnerLeft" parent="Pickups" groups=[
-"turner_l_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 50, 27 )
-
-[node name="TurnerRight" parent="Pickups" groups=[
-"turner_r_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 32, 16 )
-
-[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
-position = Vector2( 11, 17 )
+[node name="RestartButton" type="Button" parent="GuiRoot/GameOver"]
+margin_right = 64.0
+margin_bottom = 64.0
+theme = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color_disabled = Color( 0.658824, 0.113725, 0.113725, 1 )
+custom_colors/font_color = Color( 0.407843, 0.945098, 0.27451, 1 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
+[connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]

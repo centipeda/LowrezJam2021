@@ -44,6 +44,9 @@ func _input(event):
             else:
                 _launch()
                 clicked = false
+    elif event is InputEventKey:
+        if event.scancode == KEY_ESCAPE:
+            game_over()
 
 func _draw():
     # draw the launch guideline if the left mouse button is down
@@ -97,6 +100,10 @@ func _consume_pickup(pickup):
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
     pickup.queue_free()
     score += 1
+    
+func game_over():
+    $GuiRoot/GameOver.visible = true
+    get_tree().paused = true
 
 func _on_ChargeTimer_timeout():
     # restart the timer if we're not maxed out yet
@@ -111,3 +118,8 @@ func _on_SpawnTimer_timeout():
 
 func _on_pickup_entered(area):
     _consume_pickup(area)
+
+
+func _on_RestartButton_pressed():
+    get_tree().paused = false
+    get_tree().reload_current_scene()
