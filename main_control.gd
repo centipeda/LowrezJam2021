@@ -18,6 +18,7 @@ var charge_nodes
 var charge_timer
 var guide_color
 var score = 0
+var combo = 0
 var score_node
 var pickup_types = [
     "basic_pickup",
@@ -73,6 +74,8 @@ func _process(_delta):
 
 func _launch():
     if charges > 0:
+        # reset combo
+        $GuiRoot/Timeout.reset_combo()
         charge_timer.paused = true
         # set the charge bar with the last charge to 0
         charge_nodes[charges-1].value = 0
@@ -90,6 +93,7 @@ func _launch():
 
 func _consume_pickup(pickup):
     print("consuming")
+    # apply effect of pickup depending on type
     if pickup.is_in_group("booster_pickup"):
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*100)
     elif pickup.is_in_group("turner_l_pickup"):
@@ -98,8 +102,11 @@ func _consume_pickup(pickup):
     elif pickup.is_in_group("turner_r_pickup"):
         $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
+    # update tracking
     pickup.queue_free()
     score += 1
+    $GuiRoot/Timeout.add_combo()
+    
     
 func game_over():
     $GuiRoot/GameOver.visible = true
@@ -119,7 +126,9 @@ func _on_SpawnTimer_timeout():
 func _on_pickup_entered(area):
     _consume_pickup(area)
 
-
 func _on_RestartButton_pressed():
     get_tree().paused = false
     get_tree().reload_current_scene()
+
+func _on_TimeoutTimer_timeout():
+    game_over()
