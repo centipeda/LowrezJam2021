@@ -9,8 +9,7 @@ func _ready():
     pass # Replace with function body.
  
 func _process(_delta):
-    for pickup in get_children():
-        pass
+    pass
         
 func add_pickup(pickup_type):
     # spawn a pickup

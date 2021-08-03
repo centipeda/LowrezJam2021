@@ -40,18 +40,19 @@ func _input(event):
     if event is InputEventMouseButton:
         if event.button_index == BUTTON_LEFT:
             if event.pressed:
-                print("left click")
                 clicked = true
             else:
-                print("left unclick")
                 _launch()
                 clicked = false
 
 func _draw():
     # draw the launch guideline if the left mouse button is down
     if clicked:
-        draw_line($GolfBall.position + (get_global_mouse_position() - $GolfBall.position).normalized()*16,
-                  $GolfBall.position, guide_color, 2)
+        var endpoint = $GolfBall.position.move_toward(get_global_mouse_position(), 16)
+        #var p1 = Vector2(endpoint.x,endpoint.y).move_toward($GolfBall.position, 3).rotated(deg2rad(-45))
+        #var p2 = Vector2(endpoint.x,endpoint.y).move_toward($GolfBall.position, 3).rotated(deg2rad(45))
+        draw_line(endpoint, $GolfBall.position, guide_color, 2)
+        #draw_polygon([endpoint, p1, p2], [guide_color, guide_color, guide_color])
     # draw the golf ball
     draw_circle($GolfBall.position.round(), 3, Color.white)
 
