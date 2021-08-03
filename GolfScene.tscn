@@ -1,20 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
 [ext_resource path="res://main_control.gd" type="Script" id=3]
-
-[sub_resource type="PhysicsMaterial" id=1]
-bounce = 0.5
-
-[sub_resource type="CircleShape2D" id=2]
-radius = 3.0
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 4, 32 )
-
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 32, 4 )
+[ext_resource path="res://GolfBall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://BallRoll6.png" type="Texture" id=5]
+[ext_resource path="res://ArenaGrass3.png" type="Texture" id=6]
 
 [sub_resource type="Theme" id=5]
 
@@ -32,6 +23,12 @@ bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 4, 32 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 32, 4 )
+
 [node name="GolfScene" type="Node2D"]
 script = ExtResource( 3 )
 charge_timer_path = NodePath("ChargeTimer")
@@ -39,40 +36,28 @@ hit_strength = 100.0
 charge_one_path = NodePath("GuiRoot/ChargeContainer/Charge1")
 charge_two_path = NodePath("GuiRoot/ChargeContainer/Charge2")
 charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
+ball_animator_path = NodePath("YSort/GolfBall/AnimationPlayer")
 active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
 inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 
-[node name="GolfBall" type="RigidBody2D" parent="."]
-position = Vector2( 32, 48 )
-physics_material_override = SubResource( 1 )
-gravity_scale = 0.0
-contacts_reported = 1
-contact_monitor = true
-linear_damp = 1.5
+[node name="ArenaGrass3" type="Sprite" parent="."]
+position = Vector2( 32.1054, 32.4588 )
+z_index = -2
+texture = ExtResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+show_behind_parent = true
+margin_left = -0.124855
+margin_top = 0.0624275
+margin_right = 63.8751
+margin_bottom = 64.0624
+color = Color( 0.356863, 0.596078, 0.156863, 0.768627 )
 __meta__ = {
-"_edit_group_": true
+"_edit_use_anchors_": false
 }
-
-[node name="BallCollider" type="CollisionShape2D" parent="GolfBall"]
-shape = SubResource( 2 )
-
-[node name="Walls" type="StaticBody2D" parent="."]
-
-[node name="Left" type="CollisionShape2D" parent="Walls"]
-position = Vector2( -4, 32 )
-shape = SubResource( 3 )
-
-[node name="Right" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 68, 32 )
-shape = SubResource( 3 )
-
-[node name="Top" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 32, -4 )
-shape = SubResource( 4 )
-
-[node name="Bottom" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 32, 68 )
-shape = SubResource( 4 )
 
 [node name="GuiRoot" type="Control" parent="."]
 margin_left = 2.0
@@ -158,26 +143,56 @@ custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
 
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2( -4, 32 )
+shape = SubResource( 3 )
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 68, 32 )
+shape = SubResource( 3 )
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, -4 )
+shape = SubResource( 4 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, 68 )
+shape = SubResource( 4 )
+
 [node name="ChargeTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Pickups" type="Node2D" parent="."]
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Pickups" type="Node2D" parent="YSort"]
 script = ExtResource( 2 )
 
-[node name="Booster" parent="Pickups" groups=[
+[node name="Booster" parent="YSort/Pickups" groups=[
 "booster_pickup",
 ] instance=ExtResource( 1 )]
-position = Vector2( 19, 37 )
+position = Vector2( 14, 32 )
 
-[node name="TurnerLeft" parent="Pickups" groups=[
+[node name="TurnerLeft" parent="YSort/Pickups" groups=[
 "turner_l_pickup",
 ] instance=ExtResource( 1 )]
-position = Vector2( 50, 27 )
+position = Vector2( 50.0624, 26.9376 )
 
-[node name="TurnerRight" parent="Pickups" groups=[
+[node name="TurnerRight" parent="YSort/Pickups" groups=[
 "turner_r_pickup",
 ] instance=ExtResource( 1 )]
-position = Vector2( 32, 16 )
+position = Vector2( 31.9009, 16 )
+
+[node name="GolfBall" parent="YSort" instance=ExtResource( 4 )]
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+
+[node name="Sprite" parent="YSort/GolfBall" index="1"]
+texture = ExtResource( 5 )
+frame = 3
 
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
-[connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
+[connection signal="pickup_entered" from="YSort/Pickups" to="." method="_on_pickup_entered"]
+
+[editable path="YSort/GolfBall"]
