@@ -23,7 +23,8 @@ var pickup_types = [
     "basic_pickup",
     "booster_pickup",
     "turner_l_pickup",
-    "turner_r_pickup"
+    "turner_r_pickup",
+    "danger_pickup"
    ]
 
 # Called when the node enters the scene tree for the first time.
@@ -98,6 +99,10 @@ func _consume_pickup(pickup):
     elif pickup.is_in_group("turner_r_pickup"):
         $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
+    elif pickup.is_in_group("danger_pickup"):
+        $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*200)
+        $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(randi() % 360))
+        $GuiRoot/Health.lose_health()
     pickup.queue_free()
     score += 1
     
@@ -123,3 +128,7 @@ func _on_pickup_entered(area):
 func _on_RestartButton_pressed():
     get_tree().paused = false
     get_tree().reload_current_scene()
+
+
+func _on_no_health():
+    game_over()

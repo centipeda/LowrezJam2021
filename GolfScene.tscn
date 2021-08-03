@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
 [ext_resource path="res://main_control.gd" type="Script" id=3]
 [ext_resource path="res://Pixels.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Health.gd" type="Script" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.5
@@ -32,6 +33,9 @@ bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
+
+[sub_resource type="DynamicFont" id=12]
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=9]
 extra_spacing_space = -2
@@ -88,6 +92,7 @@ position = Vector2( 32, 68 )
 shape = SubResource( 4 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="ChargeTimer" type="Timer" parent="."]
@@ -199,24 +204,54 @@ custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
 
-[node name="Combo" type="Label" parent="GuiRoot"]
-margin_left = -1.0
-margin_top = 8.0
-margin_right = 61.0
-margin_bottom = 39.0
-text = "
-"
-
 [node name="Score" type="Label" parent="GuiRoot"]
-margin_left = 31.0
-margin_top = 1.0
-margin_right = 61.0
-margin_bottom = 15.0
+margin_left = 32.0
+margin_top = -5.0
+margin_right = 62.0
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 12 )
 text = "1"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Health" type="HBoxContainer" parent="GuiRoot"]
+margin_left = 15.0
+margin_top = 60.0
+margin_right = 46.0
+margin_bottom = 63.0
+custom_constants/separation = 0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+max_health = 3
+health_color = Color( 0.137255, 0.847059, 0.101961, 1 )
+no_health_color = Color( 0.772549, 0.270588, 0.270588, 1 )
+
+[node name="ColorRect" type="ColorRect" parent="GuiRoot/Health"]
+margin_right = 10.0
+margin_bottom = 3.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.137255, 0.847059, 0.101961, 1 )
+
+[node name="ColorRect2" type="ColorRect" parent="GuiRoot/Health"]
+margin_left = 10.0
+margin_right = 20.0
+margin_bottom = 3.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.137255, 0.847059, 0.101961, 1 )
+
+[node name="ColorRect3" type="ColorRect" parent="GuiRoot/Health"]
+margin_left = 20.0
+margin_right = 31.0
+margin_bottom = 3.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.137255, 0.847059, 0.101961, 1 )
 
 [node name="GameOver" type="Panel" parent="GuiRoot"]
 pause_mode = 2
@@ -253,4 +288,5 @@ __meta__ = {
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
+[connection signal="no_health" from="GuiRoot/Health" to="." method="_on_no_health"]
 [connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
