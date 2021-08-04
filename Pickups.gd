@@ -26,7 +26,7 @@ func add_pickup(pickup_type):
     # as well as the velocity
     p.velocity = Vector2(1,0).rotated(deg2rad(rotation+180))*speed
     add_child(p)
-    p.connect_parent()
+    # p.connect_parent()
 
 func _on_pickup_body_entered(area):
     emit_signal("pickup_entered", area)

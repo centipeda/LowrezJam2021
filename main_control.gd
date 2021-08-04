@@ -12,6 +12,7 @@ export(Color) var inactive_guide_color
 export(NodePath) var score_path
 
 var clicked = false
+var dying = false
 var max_charges = 3
 var charges = 3
 var charge_nodes
@@ -65,28 +66,25 @@ func _process(_delta):
         guide_color = active_guide_color
     else:
         guide_color = inactive_guide_color
-    if charges < max_charges:
-        var _charge_progress = (charge_timer.wait_time - charge_timer.time_left) / charge_timer.wait_time * 100
-        charge_nodes[charges].value = _charge_progress
     score_node.text = str(score)
+    if dying:
+        $GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
     update()
 
 func _launch():
     if charges > 0:
-        charge_timer.paused = true
         # set the charge bar with the last charge to 0
         charge_nodes[charges-1].value = 0
         # set the charging bar to 0
         if charges < max_charges:
             charge_nodes[charges].value = 0
         charges -= 1
-        # reset the timer for the charge
-        charge_timer.paused = false
-        if charge_timer.is_stopped():
-            charge_timer.start()
         # apply an impulse to the ball in the direction of the mouse from the ball
         var _dir = (get_global_mouse_position() - $GolfBall.position).normalized()
         $GolfBall.apply_impulse(Vector2(), _dir*hit_strength)
+    
+        if charges == 0:
+            start_death_countdown()
 
 func _consume_pickup(pickup):
     print("consuming")
@@ -100,17 +98,29 @@ func _consume_pickup(pickup):
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
     pickup.queue_free()
     score += 1
+    if charges < max_charges:
+        charges += 1
+        charge_nodes[charges-1].value = 100
+    if dying:
+        stop_death_countdown()
+        
+
+func start_death_countdown():
+    $ChargeTimer.start()
+    $GuiRoot/DeathMeter.visible = true
+    dying = true
+
+func stop_death_countdown():
+    $ChargeTimer.stop()
+    $GuiRoot/DeathMeter.visible = false
+    dying = false
     
 func game_over():
     $GuiRoot/GameOver.visible = true
     get_tree().paused = true
 
 func _on_ChargeTimer_timeout():
-    # restart the timer if we're not maxed out yet
-    if charges < max_charges:
-        charge_nodes[charges].value = 100
-        charges += 1
-        charge_timer.start()
+    game_over()
 
 func _on_SpawnTimer_timeout():
     print($Pickups.get_child_count())
