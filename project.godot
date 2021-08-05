@@ -21,6 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LowrezJam"
+run/main_scene="res://GolfScene.tscn"
 config/icon="res://icon.png"
 
 [display]

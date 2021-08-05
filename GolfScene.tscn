@@ -5,21 +5,21 @@
 [ext_resource path="res://main_control.gd" type="Script" id=3]
 [ext_resource path="res://Pixels.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="PhysicsMaterial" id=6]
+[sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.5
 
-[sub_resource type="CircleShape2D" id=7]
+[sub_resource type="CircleShape2D" id=2]
 radius = 3.0
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 4, 32 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 32, 4 )
 
 [sub_resource type="Theme" id=5]
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.0627451, 0.423529, 0.0823529, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -27,28 +27,28 @@ border_width_right = 1
 border_width_bottom = 1
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=9]
 font_data = ExtResource( 4 )
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.878431, 0.333333, 0.333333, 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=12]
 extra_spacing_space = -2
 font_data = ExtResource( 4 )
 
-[sub_resource type="Theme" id=14]
+[sub_resource type="Theme" id=13]
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=14]
 font_data = ExtResource( 4 )
 
 [node name="GolfScene" type="Node2D"]
@@ -66,7 +66,7 @@ score_path = NodePath("GuiRoot/Score")
 "player",
 ]]
 position = Vector2( 32, 48 )
-physics_material_override = SubResource( 6 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
@@ -76,25 +76,25 @@ __meta__ = {
 }
 
 [node name="BallCollider" type="CollisionShape2D" parent="GolfBall"]
-shape = SubResource( 7 )
+shape = SubResource( 2 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
 [node name="Left" type="CollisionShape2D" parent="Walls"]
 position = Vector2( -4, 32 )
-shape = SubResource( 8 )
+shape = SubResource( 3 )
 
 [node name="Right" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 68, 32 )
-shape = SubResource( 8 )
+shape = SubResource( 3 )
 
 [node name="Top" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 32, -4 )
-shape = SubResource( 9 )
+shape = SubResource( 4 )
 
 [node name="Bottom" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 32, 68 )
-shape = SubResource( 9 )
+shape = SubResource( 4 )
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
@@ -102,28 +102,6 @@ autostart = true
 [node name="ChargeTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
-
-[node name="Pickups" type="Node2D" parent="."]
-script = ExtResource( 2 )
-pickup_proto = ExtResource( 1 )
-
-[node name="Booster" parent="Pickups" groups=[
-"booster_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 19, 37 )
-
-[node name="TurnerLeft" parent="Pickups" groups=[
-"turner_l_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 50, 27 )
-
-[node name="TurnerRight" parent="Pickups" groups=[
-"turner_r_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 32, 16 )
-
-[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
-position = Vector2( 11, 17 )
 
 [node name="GuiRoot" type="Control" parent="."]
 margin_left = 2.0
@@ -149,7 +127,7 @@ margin_right = 11.0
 margin_bottom = 6.0
 size_flags_horizontal = 3
 theme = SubResource( 5 )
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -160,8 +138,8 @@ margin_top = 1.0
 margin_right = 10.0
 margin_bottom = 5.0
 size_flags_vertical = 1
-custom_styles/fg = SubResource( 11 )
-custom_styles/bg = SubResource( 12 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
 
@@ -171,7 +149,7 @@ margin_right = 21.0
 margin_bottom = 6.0
 size_flags_horizontal = 3
 theme = SubResource( 5 )
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -182,8 +160,8 @@ margin_top = 1.0
 margin_right = 10.0
 margin_bottom = 5.0
 size_flags_vertical = 1
-custom_styles/fg = SubResource( 11 )
-custom_styles/bg = SubResource( 12 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
 
@@ -193,7 +171,7 @@ margin_right = 31.0
 margin_bottom = 6.0
 size_flags_horizontal = 3
 theme = SubResource( 5 )
-custom_styles/panel = SubResource( 10 )
+custom_styles/panel = SubResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -204,8 +182,8 @@ margin_top = 1.0
 margin_right = 10.0
 margin_bottom = 5.0
 size_flags_vertical = 1
-custom_styles/fg = SubResource( 11 )
-custom_styles/bg = SubResource( 12 )
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
 
@@ -222,7 +200,7 @@ margin_left = 32.0
 margin_top = -4.0
 margin_right = 62.0
 margin_bottom = 8.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 9 )
 text = "1"
 align = 2
 __meta__ = {
@@ -235,8 +213,8 @@ margin_left = -1.0
 margin_top = 8.0
 margin_right = 30.0
 margin_bottom = 11.0
-custom_styles/fg = SubResource( 17 )
-custom_styles/bg = SubResource( 18 )
+custom_styles/fg = SubResource( 10 )
+custom_styles/bg = SubResource( 11 )
 value = 50.0
 percent_visible = false
 __meta__ = {
@@ -258,7 +236,7 @@ __meta__ = {
 margin_top = 24.0
 margin_right = 64.0
 margin_bottom = 51.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 12 )
 text = "game over
 click to restart"
 align = 1
@@ -266,8 +244,8 @@ align = 1
 [node name="RestartButton" type="Button" parent="GuiRoot/GameOver"]
 margin_right = 64.0
 margin_bottom = 64.0
-theme = SubResource( 14 )
-custom_fonts/font = SubResource( 15 )
+theme = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color_disabled = Color( 0.658824, 0.113725, 0.113725, 1 )
 custom_colors/font_color = Color( 0.407843, 0.945098, 0.27451, 1 )
 flat = true
@@ -275,7 +253,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Pickups" type="Node2D" parent="."]
+script = ExtResource( 2 )
+pickup_proto = ExtResource( 1 )
+
+[node name="Booster" parent="Pickups" groups=[
+"booster_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 19, 37 )
+
+[node name="TurnerLeft" parent="Pickups" groups=[
+"turner_l_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 50, 27 )
+
+[node name="TurnerRight" parent="Pickups" groups=[
+"turner_r_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 32, 16 )
+
+[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
+position = Vector2( 11, 17 )
+
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
-[connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
 [connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
