@@ -16,6 +16,8 @@ func _ready():
 		color = Color.blue
 	elif is_in_group("turner_l_pickup"):
 		color = Color.green
+	elif is_in_group("max_pickup"):
+		color = Color.gold
 	elif is_in_group("danger_pickup"):
 		color = Color.black
 

@@ -8,6 +8,7 @@ export(NodePath) var charge_three_path
 
 export(Color) var active_guide_color
 export(Color) var inactive_guide_color
+export(float) var max_probability = 0
 
 export(NodePath) var score_path
 
@@ -25,16 +26,54 @@ var pickup_types = [
 	"booster_pickup",
 	"turner_l_pickup",
 	"turner_r_pickup",
-	"danger_pickup"
+	"danger_pickup",
+	"max_pickup"
    ]
+
+
+
+var pickup_drop_rarities = [
+	25,
+	20,
+	20,
+	20,
+	15,
+	5,
+]
+
+var cumulative_pickup_rarities = Array()
+
+var pickup_drop_chances
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var last_rarity = 0
+	for n in range(0, pickup_drop_rarities.size()):
+		cumulative_pickup_rarities.append(pickup_drop_rarities[n] + last_rarity)
+		last_rarity = cumulative_pickup_rarities[n]
+		
+	if max_probability == 0:
+		max_probability = sum_array(pickup_drop_rarities)
+		
 	charge_timer = get_node(charge_timer_path)
 	charge_nodes = [get_node(charge_one_path).get_child(0),
 					get_node(charge_two_path).get_child(0), 
 					get_node(charge_three_path).get_child(0)]
 	score_node = get_node(score_path)
+	
+
+func sum_array(array):
+	var sum = 0.0
+	for element in array:
+		sum += element
+	return sum
+
+func choose_pickup():
+	var pickup_type = 0
+	var randomValue = int(rand_range(0, max_probability))
+	while (cumulative_pickup_rarities[pickup_type] <= randomValue):
+		pickup_type += 1
+	return pickup_type
 
 func _input(event):
 	# check for mouse clicks
@@ -90,6 +129,9 @@ func _launch():
 		# apply an impulse to the ball in the direction of the mouse from the ball
 		var _dir = (get_global_mouse_position() - $GolfBall.position).normalized()
 		$GolfBall.apply_impulse(Vector2(), _dir*hit_strength)
+	elif dying:
+		var _dir = (get_global_mouse_position() - $GolfBall.position).normalized()
+		$GolfBall.apply_impulse(Vector2(), _dir*hit_strength*1.5)
 
 
 func _consume_pickup(pickup):
@@ -102,9 +144,15 @@ func _consume_pickup(pickup):
 		pickup.queue_free()
 		if charges > 0:
 			deplete_charge()
+		elif dying:
+			game_over()
 		$GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
 		$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
-		
+	
+	elif pickup.is_in_group("max_pickup"):
+		max_out_charges()
+		pickup.queue_free()
+		score += 5
 	else:
 		if pickup.is_in_group("booster_pickup"):
 			$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*100)
@@ -117,13 +165,22 @@ func _consume_pickup(pickup):
 		
 		pickup.queue_free()
 		score += 1
+		
 		if charges < max_charges:
-			charges += 1
-			charge_nodes[charges-1].value = 100
-		if dying:
-			stop_death_countdown()
-			
-	
+			add_charge()
+
+func add_charge():
+	charges += 1
+	charge_nodes[charges-1].value = 100
+	if dying:
+		stop_death_countdown()
+
+func max_out_charges():
+	charges = max_charges
+	for n in range(0, max_charges):
+		charge_nodes[n].value = 100
+	if dying:
+		stop_death_countdown()
 
 func start_death_countdown():
 	$ChargeTimer.start()
@@ -144,7 +201,8 @@ func _on_ChargeTimer_timeout():
 
 func _on_SpawnTimer_timeout():
 	print($Pickups.get_child_count())
-	$Pickups.add_pickup(pickup_types[randi() % len(pickup_types)])
+	var pickup_to_choose = choose_pickup()
+	$Pickups.add_pickup(pickup_types[pickup_to_choose])
 
 func _on_pickup_entered(area):
 	_consume_pickup(area)
