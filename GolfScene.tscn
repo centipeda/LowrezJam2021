@@ -1,9 +1,16 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
 [ext_resource path="res://main_control.gd" type="Script" id=3]
 [ext_resource path="res://Pixels.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Backgrounds/FireTempleLevel.png" type="Texture" id=5]
+[ext_resource path="res://Backgrounds/WindowTempleShadows.png" type="Texture" id=6]
+[ext_resource path="res://Backgrounds/DesertLevel.png" type="Texture" id=7]
+[ext_resource path="res://Backgrounds/ArenaGrass3.png" type="Texture" id=8]
+[ext_resource path="res://Backgrounds/IceLevel.png" type="Texture" id=9]
+[ext_resource path="res://Backgrounds/TempleBackgroundSimple.png" type="Texture" id=10]
+[ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.5
@@ -51,7 +58,7 @@ font_data = ExtResource( 4 )
 [sub_resource type="DynamicFont" id=14]
 font_data = ExtResource( 4 )
 
-[node name="GolfScene" type="Node2D"]
+[node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
 charge_timer_path = NodePath("ChargeTimer")
 hit_strength = 100.0
@@ -61,6 +68,46 @@ charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
 active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
 inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("GuiRoot/Score")
+
+[node name="FireTemple" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="FireTempleLevel" type="Sprite" parent="FireTemple"]
+position = Vector2( 31.9035, 31.8625 )
+texture = ExtResource( 5 )
+
+[node name="DesertLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="DesertLevel2" type="Sprite" parent="DesertLevel"]
+position = Vector2( 32.1293, 32.1417 )
+texture = ExtResource( 7 )
+
+[node name="GrassLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="GrassLevel" type="Sprite" parent="GrassLevel"]
+position = Vector2( 32.208, 32.063 )
+texture = ExtResource( 8 )
+
+[node name="IceLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="IceLevel" type="Sprite" parent="IceLevel"]
+position = Vector2( 32.1293, 31.9057 )
+texture = ExtResource( 9 )
+
+[node name="CPUTemple" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="CPUTempleLevel" type="Sprite" parent="CPUTemple"]
+position = Vector2( 32.1293, 32.063 )
+texture = ExtResource( 10 )
 
 [node name="GolfBall" type="RigidBody2D" parent="." groups=[
 "player",
@@ -102,6 +149,38 @@ autostart = true
 [node name="ChargeTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="Pickups" type="Node2D" parent="."]
+script = ExtResource( 2 )
+pickup_proto = ExtResource( 1 )
+
+[node name="Booster" parent="Pickups" groups=[
+"booster_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 19, 37 )
+
+[node name="TurnerLeft" parent="Pickups" groups=[
+"turner_l_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 50, 27 )
+
+[node name="TurnerRight" parent="Pickups" groups=[
+"turner_r_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 32, 16 )
+
+[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
+position = Vector2( 11, 17 )
+
+[node name="WindowTemple" type="Node2D" parent="."]
+
+[node name="WindowTemple" type="Sprite" parent="WindowTemple"]
+position = Vector2( 32.175, 32.356 )
+texture = ExtResource( 11 )
+
+[node name="WindowTempleShadows" type="Sprite" parent="WindowTemple"]
+position = Vector2( 32.1138, 32.353 )
+texture = ExtResource( 6 )
 
 [node name="GuiRoot" type="Control" parent="."]
 margin_left = 2.0
@@ -194,6 +273,9 @@ margin_right = 61.0
 margin_bottom = 39.0
 text = "
 "
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Score" type="Label" parent="GuiRoot"]
 margin_left = 32.0
@@ -253,29 +335,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Pickups" type="Node2D" parent="."]
-script = ExtResource( 2 )
-pickup_proto = ExtResource( 1 )
-
-[node name="Booster" parent="Pickups" groups=[
-"booster_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 19, 37 )
-
-[node name="TurnerLeft" parent="Pickups" groups=[
-"turner_l_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 50, 27 )
-
-[node name="TurnerRight" parent="Pickups" groups=[
-"turner_r_pickup",
-] instance=ExtResource( 1 )]
-position = Vector2( 32, 16 )
-
-[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
-position = Vector2( 11, 17 )
-
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
-[connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
+[connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
