@@ -45,6 +45,7 @@ func _level_enter(level):
     $LevelMenu/LevelName.text = level_names[level]
     $LevelMenu/HiScore.text = str($SaveData.data["high_scores"][level])
     active_level = level
+    level_select = true
 
 func _on_Level1_mouse_entered():
     _level_enter(0)
@@ -63,3 +64,5 @@ func _on_Level_mouse_exited():
     $LevelMenu/LevelName.text = "level select"
     $LevelMenu/HiScore.visible = false
     $LevelMenu/HiScoreLabel.visible = false
+    active_level = -1
+    level_select = false

@@ -73,6 +73,7 @@ inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("GuiRoot/Score")
 
 [node name="FireTemple" type="Node2D" parent="."]
+visible = false
 z_index = -5
 
 [node name="FireTempleLevel" type="Sprite" parent="FireTemple"]
@@ -111,7 +112,6 @@ polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 
 disabled = true
 
 [node name="GrassLevel" type="Node2D" parent="."]
-visible = false
 z_index = -5
 
 [node name="GrassLevel" type="Sprite" parent="GrassLevel"]
@@ -119,10 +119,9 @@ position = Vector2( 32.208, 32.063 )
 texture = ExtResource( 8 )
 
 [node name="Colliders" type="Area2D" parent="GrassLevel"]
-space_override = 1
-gravity = 0.0
-linear_damp = 43.495
-priority = 2.0
+space_override = 3
+gravity_vec = Vector2( 0, 0 )
+linear_damp = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrassLevel/Colliders"]
 position = Vector2( 32, 33 )
@@ -182,7 +181,6 @@ texture = ExtResource( 6 )
 ]]
 position = Vector2( 32, 48 )
 physics_material_override = SubResource( 1 )
-gravity_scale = 0.0
 contacts_reported = 1
 contact_monitor = true
 linear_damp = 1.5
@@ -241,7 +239,6 @@ position = Vector2( 32, 16 )
 position = Vector2( 11, 17 )
 
 [node name="GuiRoot" type="Control" parent="."]
-visible = false
 margin_left = 2.0
 margin_right = 66.0
 margin_bottom = 64.0
@@ -324,17 +321,6 @@ custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 8 )
 value = 100.0
 percent_visible = false
-
-[node name="Combo" type="Label" parent="GuiRoot"]
-margin_left = -1.0
-margin_top = 8.0
-margin_right = 61.0
-margin_bottom = 39.0
-text = "
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Score" type="Label" parent="GuiRoot"]
 margin_left = 32.0
