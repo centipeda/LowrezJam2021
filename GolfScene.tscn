@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://Backgrounds/IceLevel.png" type="Texture" id=9]
 [ext_resource path="res://Backgrounds/TempleBackgroundSimple.png" type="Texture" id=10]
 [ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 10, 11 )
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.5
@@ -70,12 +73,15 @@ inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("GuiRoot/Score")
 
 [node name="FireTemple" type="Node2D" parent="."]
-visible = false
 z_index = -5
 
 [node name="FireTempleLevel" type="Sprite" parent="FireTemple"]
 position = Vector2( 31.9035, 31.8625 )
 texture = ExtResource( 5 )
+
+[node name="Colliders" type="StaticBody2D" parent="FireTemple"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FireTemple/Colliders"]
 
 [node name="DesertLevel" type="Node2D" parent="."]
 visible = false
@@ -85,6 +91,25 @@ z_index = -5
 position = Vector2( 32.1293, 32.1417 )
 texture = ExtResource( 7 )
 
+[node name="Colliders" type="StaticBody2D" parent="DesertLevel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+build_mode = 1
+polygon = PoolVector2Array( 4, 60, 8, 58, 13, 58, 16, 61, 24, 61, 26, 59, 30, 59, 32, 57, 39, 59, 43, 58, 47, 58, 57, 59, 57, 60, 59, 60, 60, 59, 62, 64, 4, 64 )
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 5, 3, 6, 8, 6, 20, 4, 29, 5, 37, 5, 45, 4, 48, 4, 61, 2, 61, 1, 2 )
+disabled = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 4, 3, 6, 3, 12, 3, 17, 9, 47, 9, 52, 3, 56, 3, 58, 4, 58, 0, 5, 0, 6, 3 )
+disabled = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 16, 57, 4, 62, 5, 62, 60 )
+disabled = true
+
 [node name="GrassLevel" type="Node2D" parent="."]
 visible = false
 z_index = -5
@@ -93,13 +118,41 @@ z_index = -5
 position = Vector2( 32.208, 32.063 )
 texture = ExtResource( 8 )
 
+[node name="Colliders" type="Area2D" parent="GrassLevel"]
+space_override = 1
+gravity = 0.0
+linear_damp = 43.495
+priority = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassLevel/Colliders"]
+position = Vector2( 32, 33 )
+shape = SubResource( 15 )
+
 [node name="IceLevel" type="Node2D" parent="."]
 visible = false
 z_index = -5
 
 [node name="IceLevel" type="Sprite" parent="IceLevel"]
-position = Vector2( 32.1293, 31.9057 )
+position = Vector2( 32, 32 )
 texture = ExtResource( 9 )
+
+[node name="Colliders" type="StaticBody2D" parent="IceLevel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 31.5, 32 )
+scale = Vector2( 1.96875, 0.375 )
+polygon = PoolVector2Array( -14.9841, 13.3333, -10.9206, 13.3333, -9.39682, 8, -9.39682, -2.66666, -11.9365, -16, -14.9841, -16 )
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 32, 32 )
+polygon = PoolVector2Array( -3, -4, 3, -4, 6, -1, 6, 3, 4, 5, -4, 5, -6, 3, -6, -1 )
+disabled = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 57, 31 )
+polygon = PoolVector2Array( 5, 6, -4, 6, -6, 4, -6, 0, 0, -5, 5, -5 )
+disabled = true
 
 [node name="CPUTemple" type="Node2D" parent="."]
 visible = false
@@ -109,7 +162,10 @@ z_index = -5
 position = Vector2( 32.1293, 32.063 )
 texture = ExtResource( 10 )
 
+[node name="Colliders" type="StaticBody2D" parent="CPUTemple"]
+
 [node name="WindowTemple" type="Node2D" parent="."]
+visible = false
 
 [node name="WindowTemple" type="Sprite" parent="WindowTemple"]
 position = Vector2( 32.175, 32.356 )
@@ -118,6 +174,8 @@ texture = ExtResource( 11 )
 [node name="WindowTempleShadows" type="Sprite" parent="WindowTemple"]
 position = Vector2( 32.1138, 32.353 )
 texture = ExtResource( 6 )
+
+[node name="Colliders" type="StaticBody2D" parent="WindowTemple"]
 
 [node name="GolfBall" type="RigidBody2D" parent="." groups=[
 "player",
@@ -183,6 +241,7 @@ position = Vector2( 32, 16 )
 position = Vector2( 11, 17 )
 
 [node name="GuiRoot" type="Control" parent="."]
+visible = false
 margin_left = 2.0
 margin_right = 66.0
 margin_bottom = 64.0

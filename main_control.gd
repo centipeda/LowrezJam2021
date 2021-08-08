@@ -114,10 +114,13 @@ func _process(_delta):
         $GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
     update()
 
-func load_level(level):
-    for l in range(levels.size()):
-        print(l)
-        get_node(levels[l]).visible = (l == level)
+func load_level(load_level_idx):
+    var level
+    for level_idx in range(levels.size()):
+        level = get_node(levels[level_idx])
+        level.visible = (level_idx == load_level_idx)
+        for collider in level.get_node("Colliders").get_children():
+            collider.disabled = (level_idx != load_level_idx)
 
 func deplete_charge():
     # set the charge bar with the last charge to 0
