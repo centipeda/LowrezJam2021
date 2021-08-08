@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://GolfScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://test_rect.png" type="Texture" id=4]
+[ext_resource path="res://SaveData.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.968627, 0.8, 1 )
@@ -26,6 +27,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 game_scene = ExtResource( 3 )
+
+[node name="SaveData" parent="." instance=ExtResource( 5 )]
 
 [node name="StartMenu" type="Control" parent="."]
 visible = false
@@ -100,9 +103,9 @@ __meta__ = {
 }
 
 [node name="LevelName" type="Label" parent="LevelMenu"]
-margin_top = 4.0
+margin_top = 1.0
 margin_right = 64.0
-margin_bottom = 18.0
+margin_bottom = 15.0
 custom_fonts/font = ExtResource( 1 )
 text = "water temple"
 align = 1
@@ -111,9 +114,9 @@ __meta__ = {
 }
 
 [node name="HiScoreLabel" type="Label" parent="LevelMenu"]
-margin_top = 51.0
+margin_top = 48.0
 margin_right = 64.0
-margin_bottom = 65.0
+margin_bottom = 62.0
 custom_fonts/font = ExtResource( 1 )
 text = "high score"
 align = 1
@@ -122,9 +125,9 @@ __meta__ = {
 }
 
 [node name="HiScore" type="Label" parent="LevelMenu"]
-margin_top = 57.0
+margin_top = 55.0
 margin_right = 64.0
-margin_bottom = 71.0
+margin_bottom = 69.0
 custom_fonts/font = ExtResource( 1 )
 text = "0"
 align = 1
@@ -134,9 +137,9 @@ __meta__ = {
 
 [node name="Level1" type="TextureRect" parent="LevelMenu"]
 margin_left = 4.0
-margin_top = 16.0
+margin_top = 12.0
 margin_right = 20.0
-margin_bottom = 32.0
+margin_bottom = 28.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {
@@ -145,9 +148,9 @@ __meta__ = {
 
 [node name="Level2" type="TextureRect" parent="LevelMenu"]
 margin_left = 24.0
-margin_top = 16.0
+margin_top = 12.0
 margin_right = 40.0
-margin_bottom = 32.0
+margin_bottom = 28.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {
@@ -156,9 +159,9 @@ __meta__ = {
 
 [node name="Level3" type="TextureRect" parent="LevelMenu"]
 margin_left = 44.0
-margin_top = 16.0
+margin_top = 12.0
 margin_right = 60.0
-margin_bottom = 32.0
+margin_bottom = 28.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {
@@ -167,9 +170,9 @@ __meta__ = {
 
 [node name="Level4" type="TextureRect" parent="LevelMenu"]
 margin_left = 4.0
-margin_top = 36.0
+margin_top = 32.0
 margin_right = 20.0
-margin_bottom = 52.0
+margin_bottom = 48.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {
@@ -178,9 +181,9 @@ __meta__ = {
 
 [node name="Level5" type="TextureRect" parent="LevelMenu"]
 margin_left = 24.0
-margin_top = 36.0
+margin_top = 32.0
 margin_right = 40.0
-margin_bottom = 52.0
+margin_bottom = 48.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {
@@ -189,9 +192,9 @@ __meta__ = {
 
 [node name="Level6" type="TextureRect" parent="LevelMenu"]
 margin_left = 44.0
-margin_top = 36.0
+margin_top = 32.0
 margin_right = 60.0
-margin_bottom = 52.0
+margin_bottom = 48.0
 texture = ExtResource( 4 )
 stretch_mode = 1
 __meta__ = {

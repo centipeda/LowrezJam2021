@@ -29,9 +29,6 @@ var pickup_types = [
     "danger_pickup",
     "max_pickup"
    ]
-
-
-
 var pickup_drop_rarities = [
     25,
     20,
@@ -40,7 +37,14 @@ var pickup_drop_rarities = [
     15,
     5,
 ]
-
+var levels = [
+    "FireTemple",
+    "DesertLevel",
+    "GrassLevel",
+    "IceLevel",
+    "CPUTemple",
+    "WindowTemple"
+   ]
 var cumulative_pickup_rarities = Array()
 
 var pickup_drop_chances
@@ -60,7 +64,6 @@ func _ready():
                     get_node(charge_two_path).get_child(0), 
                     get_node(charge_three_path).get_child(0)]
     score_node = get_node(score_path)
-    
 
 func sum_array(array):
     var sum = 0.0
@@ -111,6 +114,10 @@ func _process(_delta):
         $GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
     update()
 
+func load_level(level):
+    for l in range(levels.size()):
+        print(l)
+        get_node(levels[l]).visible = (l == level)
 
 func deplete_charge():
     # set the charge bar with the last charge to 0
