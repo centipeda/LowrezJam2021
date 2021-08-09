@@ -6,7 +6,7 @@ var save_filename
 var data = {}
 # scores at which the next level should be unlocked
 var unlock_thresholds = [
-    10, 10, 10, 10, 10, 10
+    1, 1, 1, 1, 1
    ]
 
 # Called when the node enters the scene tree for the first time.

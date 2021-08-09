@@ -224,6 +224,12 @@ func game_over():
     # otherwise just show the old high score
     else:
         $GuiRoot/GameOver/HighScore.text = "high score: " + str(high_score)
+    # check if we unlocked a new level
+    if active_level < levels.size()-1 and score > $SaveData.unlock_thresholds[active_level]:
+        $SaveData.data["unlocked"][active_level+1] = true
+        $SaveData.save_data()
+    else:
+        $GuiRoot/GameOver/LevelUnlocked.visible = false
     get_tree().paused = true
 
 func _on_ChargeTimer_timeout():
