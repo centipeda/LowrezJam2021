@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -11,6 +11,10 @@
 [ext_resource path="res://Backgrounds/IceLevel.png" type="Texture" id=9]
 [ext_resource path="res://Backgrounds/TempleBackgroundSimple.png" type="Texture" id=10]
 [ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
+[ext_resource path="res://GolfBall.gd" type="Script" id=12]
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 2, 2 )
 
 [sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 10, 11 )
@@ -73,16 +77,33 @@ inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("GuiRoot/Score")
 
 [node name="FireTemple" type="Node2D" parent="."]
-visible = false
 z_index = -5
 
 [node name="FireTempleLevel" type="Sprite" parent="FireTemple"]
 position = Vector2( 31.9035, 31.8625 )
 texture = ExtResource( 5 )
 
-[node name="Colliders" type="StaticBody2D" parent="FireTemple"]
+[node name="Colliders" type="Area2D" parent="FireTemple"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FireTemple/Colliders"]
+[node name="TeleporterTL" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 6, 6 )
+shape = SubResource( 16 )
+
+[node name="TeleporterTR" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 58, 6 )
+shape = SubResource( 16 )
+
+[node name="TeleporterBL" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 6, 58 )
+shape = SubResource( 16 )
+
+[node name="TeleporterBR" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 58, 58 )
+shape = SubResource( 16 )
+
+[node name="TeleporterCenter" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 32, 32 )
+shape = SubResource( 16 )
 
 [node name="DesertLevel" type="Node2D" parent="."]
 visible = false
@@ -112,6 +133,7 @@ polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 
 disabled = true
 
 [node name="GrassLevel" type="Node2D" parent="."]
+visible = false
 z_index = -5
 
 [node name="GrassLevel" type="Sprite" parent="GrassLevel"]
@@ -184,6 +206,7 @@ physics_material_override = SubResource( 1 )
 contacts_reported = 1
 contact_monitor = true
 linear_damp = 1.5
+script = ExtResource( 12 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -380,6 +403,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="body_entered" from="FireTemple/Colliders" to="." method="_on_Teleporters_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]

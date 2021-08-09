@@ -114,6 +114,8 @@ func _process(_delta):
         $GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
     update()
 
+
+
 func load_level(load_level_idx):
     var level
     for level_idx in range(levels.size()):
@@ -221,3 +223,10 @@ func _on_pickup_entered(area):
 func _on_RestartButton_pressed():
     get_tree().paused = false
     get_tree().reload_current_scene()
+
+
+func _on_Teleporters_body_entered(body):
+    # determine which teleporter was entered
+    if body.is_in_group("player"):
+        # tell ball to teleport itself to the center
+        $GolfBall.teleport_to($GolfBall.TELEPORT_TO.CENTER)
