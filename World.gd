@@ -14,7 +14,14 @@ func _ready():
 #    pass
 
 func _on_load_level(level):
-    get_child(0).queue_free()
+    if get_child_count() > 0:
+        get_child(0).queue_free()
     var game = game_scene.instance()
     game.load_level(level)
     add_child(game)
+
+func _on_load_menu():
+    if get_child_count() > 0:
+        get_child(0).queue_free()
+    var menu = menu_scene.instance()
+    add_child(menu)

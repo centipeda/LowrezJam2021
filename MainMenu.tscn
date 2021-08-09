@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://GolfScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://test_rect.png" type="Texture" id=4]
 [ext_resource path="res://SaveData.tscn" type="PackedScene" id=5]
+[ext_resource path="res://lock.png" type="Texture" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.968627, 0.8, 1 )
@@ -124,6 +125,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LevelLocked" type="Label" parent="LevelMenu"]
+margin_top = 51.0
+margin_right = 64.0
+margin_bottom = 65.0
+custom_fonts/font = ExtResource( 1 )
+text = "level locked"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HiScore" type="Label" parent="LevelMenu"]
 margin_top = 55.0
 margin_right = 64.0
@@ -146,6 +158,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level1"]
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Level2" type="TextureRect" parent="LevelMenu"]
 margin_left = 24.0
 margin_top = 12.0
@@ -153,6 +174,15 @@ margin_right = 40.0
 margin_bottom = 28.0
 texture = ExtResource( 4 )
 stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level2"]
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -168,6 +198,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level3"]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Level4" type="TextureRect" parent="LevelMenu"]
 margin_left = 4.0
 margin_top = 32.0
@@ -175,6 +215,16 @@ margin_right = 20.0
 margin_bottom = 48.0
 texture = ExtResource( 4 )
 stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level4"]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -190,6 +240,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level5"]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Level6" type="TextureRect" parent="LevelMenu"]
 margin_left = 44.0
 margin_top = 32.0
@@ -197,6 +257,16 @@ margin_right = 60.0
 margin_bottom = 48.0
 texture = ExtResource( 4 )
 stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Locked" type="TextureRect" parent="LevelMenu/Level6"]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

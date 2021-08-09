@@ -4,6 +4,7 @@ export(PackedScene) var game_scene
 
 signal load_level (level)
 
+var level_nodes
 var level_names = [
     "fire temple",
     "desert temple",
@@ -19,6 +20,19 @@ func _ready():
     $LevelMenu.visible = false
     $StartMenu.visible = true
     connect("load_level", get_parent(), "_on_load_level")
+    level_nodes = [
+        $LevelMenu/Level1,
+        $LevelMenu/Level2,
+        $LevelMenu/Level3,
+        $LevelMenu/Level4,
+        $LevelMenu/Level5,
+        $LevelMenu/Level6,
+       ]
+    for level_idx in range(level_nodes.size()):
+        if $SaveData.data["unlocked"][level_idx]:
+            level_nodes[level_idx].get_node("Locked").visible = false
+        else:
+            level_nodes[level_idx].get_node("Locked").visible = true
 
 func _process(_delta):
     pass
@@ -38,12 +52,20 @@ func _on_StartButton_pressed():
 func _on_QuitButton_pressed():
     get_tree().quit()
 
-func _level_enter(level):
-    $LevelMenu/HiScore.visible = true
-    $LevelMenu/HiScoreLabel.visible = true
-    $LevelMenu/LevelName.text = level_names[level]
-    $LevelMenu/HiScore.text = str($SaveData.data["high_scores"][level])
-    active_level = level
+func _level_enter(level_idx):
+    # if the locked node is visible then the level isn't unlocked yet
+    if level_nodes[level_idx].get_node("Locked").visible:
+        active_level = -1
+        $LevelMenu/HiScore.visible = false
+        $LevelMenu/HiScoreLabel.visible = false
+        $LevelMenu/LevelLocked.visible = true
+    else:
+        active_level = level_idx
+        $LevelMenu/HiScore.visible = true
+        $LevelMenu/HiScoreLabel.visible = true
+        $LevelMenu/LevelLocked.visible = false
+    $LevelMenu/HiScore.text = str($SaveData.data["high_scores"][level_idx])
+    $LevelMenu/LevelName.text = level_names[level_idx]
 
 func _on_Level1_mouse_entered():
     _level_enter(0)

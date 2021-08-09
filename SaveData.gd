@@ -4,6 +4,10 @@ export(String) var default_save_file
 
 var save_filename
 var data = {}
+# scores at which the next level should be unlocked
+var unlock_thresholds = [
+    10, 10, 10, 10, 10, 10
+   ]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
