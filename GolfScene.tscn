@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Backgrounds/TempleBackgroundSimple.png" type="Texture" id=10]
 [ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
 [ext_resource path="res://GolfBall.gd" type="Script" id=12]
+[ext_resource path="res://SaveData.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 2, 2 )
@@ -75,6 +76,8 @@ charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
 active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
 inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("GuiRoot/Score")
+
+[node name="SaveData" parent="." instance=ExtResource( 13 )]
 
 [node name="FireTemple" type="Node2D" parent="."]
 z_index = -5
@@ -383,13 +386,48 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="GuiRoot/GameOver"]
-margin_top = 24.0
 margin_right = 64.0
-margin_bottom = 51.0
+margin_bottom = 12.0
 custom_fonts/font = SubResource( 12 )
-text = "game over
-click to restart"
+text = "game over"
 align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="GuiRoot/GameOver"]
+margin_top = 45.0
+margin_right = 64.0
+margin_bottom = 57.0
+custom_fonts/font = SubResource( 12 )
+text = "click to restart"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="GuiRoot/GameOver"]
+margin_top = 16.0
+margin_right = 64.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 12 )
+text = "score: "
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScore" type="Label" parent="GuiRoot/GameOver"]
+margin_left = 1.0
+margin_top = 24.0
+margin_right = 65.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 12 )
+text = "new high score!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="RestartButton" type="Button" parent="GuiRoot/GameOver"]
 margin_right = 64.0

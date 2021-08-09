@@ -37,6 +37,11 @@ var pickup_drop_rarities = [
     15,
     5,
 ]
+var cumulative_pickup_rarities = Array()
+
+var pickup_drop_chances
+
+var active_level = 0
 var levels = [
     "FireTemple",
     "DesertLevel",
@@ -45,9 +50,6 @@ var levels = [
     "CPUTemple",
     "WindowTemple"
    ]
-var cumulative_pickup_rarities = Array()
-
-var pickup_drop_chances
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -79,7 +81,7 @@ func choose_pickup():
     return pickup_type
 
 func _input(event):
-    # check for mouse clicks
+    # check for mouse clicks...
     # if we clicked and released then launch the ball
     if event is InputEventMouseButton:
         if event.button_index == BUTTON_LEFT:
@@ -118,11 +120,16 @@ func _process(_delta):
 
 func load_level(load_level_idx):
     var level
+    # cycle through all the nodes representing each level
     for level_idx in range(levels.size()):
         level = get_node(levels[level_idx])
+        # if it's the level we want, make it visible
         level.visible = (level_idx == load_level_idx)
+        # then activate all of its colliders by settind disabled to false
         for collider in level.get_node("Colliders").get_children():
             collider.disabled = (level_idx != load_level_idx)
+    # set the active level so we know which high score to update
+    active_level = load_level_idx
 
 func deplete_charge():
     # set the charge bar with the last charge to 0
@@ -205,7 +212,18 @@ func stop_death_countdown():
     dying = false
     
 func game_over():
+    var high_score = int($SaveData.data["high_scores"][active_level])
+    # check if we have new level high score
     $GuiRoot/GameOver.visible = true
+    $GuiRoot/GameOver/Score.text = "score: " + str(score)
+    # update data if we got a new high score
+    if score > high_score:
+        $SaveData.data["high_scores"][active_level] = score
+        $SaveData.save_data()
+        $GuiRoot/GameOver/HighScore.text = "new high score!"
+    # otherwise just show the old high score
+    else:
+        $GuiRoot/GameOver/HighScore.text = "high score: " + str(high_score)
     get_tree().paused = true
 
 func _on_ChargeTimer_timeout():
@@ -224,7 +242,7 @@ func _on_RestartButton_pressed():
     get_tree().paused = false
     get_tree().reload_current_scene()
 
-
+# determine how the teleporters function
 func _on_Teleporters_body_entered(body):
     # determine which teleporter was entered
     if body.is_in_group("player"):

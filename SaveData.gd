@@ -7,8 +7,10 @@ var data = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+    print(OS.get_user_data_dir())
     save_filename = "user://" + default_save_file
     load_data()
+    print(data)
     
 func _load_default_data():
     return {
@@ -32,8 +34,11 @@ func load_data():
     if not save_game.file_exists(save_filename):
         data = _load_default_data()
         return
-    save_game.open(filename)
-    data = parse_json(save_game.get_line())
+    save_game.open(save_filename, File.READ)
+    var s = save_game.get_line()
+    print(save_filename)
+    print(s)
+    data = parse_json(s)
     save_game.close()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

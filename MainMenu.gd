@@ -12,8 +12,7 @@ var level_names = [
     "cpu temple",
     "window temple"
    ]
-var active_level = 0
-var level_select = false
+var active_level = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,14 +26,14 @@ func _process(_delta):
 func _input(event):
     if event is InputEventMouseButton:
         if event.button_index == BUTTON_LEFT and event.pressed:
-            if level_select:
+            # only load into the game if we're at the level select screen
+            if active_level >= 0 and $LevelMenu.visible:
                 print("clicked", active_level)
                 emit_signal("load_level", active_level)
 
 func _on_StartButton_pressed():
     $StartMenu.visible = false
     $LevelMenu.visible = true
-    level_select = true
 
 func _on_QuitButton_pressed():
     get_tree().quit()
@@ -45,7 +44,6 @@ func _level_enter(level):
     $LevelMenu/LevelName.text = level_names[level]
     $LevelMenu/HiScore.text = str($SaveData.data["high_scores"][level])
     active_level = level
-    level_select = true
 
 func _on_Level1_mouse_entered():
     _level_enter(0)
@@ -65,4 +63,3 @@ func _on_Level_mouse_exited():
     $LevelMenu/HiScore.visible = false
     $LevelMenu/HiScoreLabel.visible = false
     active_level = -1
-    level_select = false
