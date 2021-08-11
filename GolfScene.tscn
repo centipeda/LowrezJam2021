@@ -1,0 +1,464 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Pickups.gd" type="Script" id=2]
+[ext_resource path="res://main_control.gd" type="Script" id=3]
+[ext_resource path="res://Fonts/Pixels.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Backgrounds/FireTempleLevel.png" type="Texture" id=5]
+[ext_resource path="res://Backgrounds/WindowTempleShadows.png" type="Texture" id=6]
+[ext_resource path="res://Backgrounds/DesertLevel.png" type="Texture" id=7]
+[ext_resource path="res://Backgrounds/ArenaGrass3.png" type="Texture" id=8]
+[ext_resource path="res://Backgrounds/IceLevel.png" type="Texture" id=9]
+[ext_resource path="res://Backgrounds/TempleBackgroundSimple.png" type="Texture" id=10]
+[ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
+[ext_resource path="res://GolfBall.gd" type="Script" id=12]
+[ext_resource path="res://SaveData.tscn" type="PackedScene" id=13]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 2, 2 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 11 )
+
+[sub_resource type="PhysicsMaterial" id=3]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 3.0
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 4, 32 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 32, 4 )
+
+[sub_resource type="Theme" id=7]
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.0627451, 0.423529, 0.0823529, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.109804, 0.364706, 0.0588235, 1 )
+
+[sub_resource type="DynamicFont" id=11]
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.137255, 0.847059, 0.101961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 0.878431, 0.333333, 0.333333, 1 )
+
+[sub_resource type="DynamicFont" id=14]
+extra_spacing_space = -2
+font_data = ExtResource( 4 )
+
+[sub_resource type="Theme" id=15]
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 4 )
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource( 3 )
+charge_timer_path = NodePath("ChargeTimer")
+hit_strength = 100.0
+charge_one_path = NodePath("GuiRoot/ChargeContainer/Charge1")
+charge_two_path = NodePath("GuiRoot/ChargeContainer/Charge2")
+charge_three_path = NodePath("GuiRoot/ChargeContainer/Charge3")
+active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
+inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
+score_path = NodePath("GuiRoot/Score")
+
+[node name="SaveData" parent="." instance=ExtResource( 13 )]
+
+[node name="FireTemple" type="Node2D" parent="."]
+z_index = -5
+
+[node name="FireTempleLevel" type="Sprite" parent="FireTemple"]
+position = Vector2( 31.9035, 31.8625 )
+texture = ExtResource( 5 )
+
+[node name="Colliders" type="Area2D" parent="FireTemple"]
+
+[node name="TeleporterTL" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 6, 6 )
+shape = SubResource( 1 )
+
+[node name="TeleporterTR" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 58, 6 )
+shape = SubResource( 1 )
+
+[node name="TeleporterBL" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 6, 58 )
+shape = SubResource( 1 )
+
+[node name="TeleporterBR" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 58, 58 )
+shape = SubResource( 1 )
+
+[node name="TeleporterCenter" type="CollisionShape2D" parent="FireTemple/Colliders"]
+position = Vector2( 32, 32 )
+shape = SubResource( 1 )
+
+[node name="DesertLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="DesertLevel2" type="Sprite" parent="DesertLevel"]
+position = Vector2( 32.1293, 32.1417 )
+texture = ExtResource( 7 )
+
+[node name="Colliders" type="StaticBody2D" parent="DesertLevel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+build_mode = 1
+polygon = PoolVector2Array( 4, 60, 8, 58, 13, 58, 16, 61, 24, 61, 26, 59, 30, 59, 32, 57, 39, 59, 43, 58, 47, 58, 57, 59, 57, 60, 59, 60, 60, 59, 62, 64, 4, 64 )
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 5, 3, 6, 8, 6, 20, 4, 29, 5, 37, 5, 45, 4, 48, 4, 61, 2, 61, 1, 2 )
+disabled = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 4, 3, 6, 3, 12, 3, 17, 9, 47, 9, 52, 3, 56, 3, 58, 4, 58, 0, 5, 0, 6, 3 )
+disabled = true
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="DesertLevel/Colliders"]
+polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 16, 57, 4, 62, 5, 62, 60 )
+disabled = true
+
+[node name="GrassLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="GrassLevel" type="Sprite" parent="GrassLevel"]
+position = Vector2( 32.208, 32.063 )
+texture = ExtResource( 8 )
+
+[node name="Colliders" type="Area2D" parent="GrassLevel"]
+space_override = 3
+gravity_vec = Vector2( 0, 0 )
+linear_damp = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrassLevel/Colliders"]
+position = Vector2( 32, 33 )
+shape = SubResource( 2 )
+
+[node name="IceLevel" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="IceLevel" type="Sprite" parent="IceLevel"]
+position = Vector2( 32, 32 )
+texture = ExtResource( 9 )
+
+[node name="Colliders" type="StaticBody2D" parent="IceLevel"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 31.5, 32 )
+scale = Vector2( 1.96875, 0.375 )
+polygon = PoolVector2Array( -14.9841, 13.3333, -10.9206, 13.3333, -9.39682, 8, -9.39682, -2.66666, -11.9365, -16, -14.9841, -16 )
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 32, 32 )
+polygon = PoolVector2Array( -3, -4, 3, -4, 6, -1, 6, 3, 4, 5, -4, 5, -6, 3, -6, -1 )
+disabled = true
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="IceLevel/Colliders"]
+position = Vector2( 57, 31 )
+polygon = PoolVector2Array( 5, 6, -4, 6, -6, 4, -6, 0, 0, -5, 5, -5 )
+disabled = true
+
+[node name="CPUTemple" type="Node2D" parent="."]
+visible = false
+z_index = -5
+
+[node name="CPUTempleLevel" type="Sprite" parent="CPUTemple"]
+position = Vector2( 32.1293, 32.063 )
+texture = ExtResource( 10 )
+
+[node name="Colliders" type="StaticBody2D" parent="CPUTemple"]
+
+[node name="WindowTemple" type="Node2D" parent="."]
+visible = false
+
+[node name="WindowTemple" type="Sprite" parent="WindowTemple"]
+position = Vector2( 32.175, 32.356 )
+texture = ExtResource( 11 )
+
+[node name="WindowTempleShadows" type="Sprite" parent="WindowTemple"]
+position = Vector2( 32.1138, 32.353 )
+texture = ExtResource( 6 )
+
+[node name="Colliders" type="StaticBody2D" parent="WindowTemple"]
+
+[node name="GolfBall" type="RigidBody2D" parent="." groups=[
+"player",
+]]
+position = Vector2( 32, 48 )
+physics_material_override = SubResource( 3 )
+contacts_reported = 1
+contact_monitor = true
+linear_damp = 1.5
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="BallCollider" type="CollisionShape2D" parent="GolfBall"]
+shape = SubResource( 4 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Walls"]
+position = Vector2( -4, 32 )
+shape = SubResource( 5 )
+
+[node name="Right" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 68, 32 )
+shape = SubResource( 5 )
+
+[node name="Top" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, -4 )
+shape = SubResource( 6 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 32, 68 )
+shape = SubResource( 6 )
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ChargeTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="EnemyTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Pickups" type="Node2D" parent="."]
+script = ExtResource( 2 )
+pickup_proto = ExtResource( 1 )
+
+[node name="Booster" parent="Pickups" groups=[
+"booster_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 19, 37 )
+
+[node name="TurnerLeft" parent="Pickups" groups=[
+"turner_l_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 50, 27 )
+
+[node name="TurnerRight" parent="Pickups" groups=[
+"turner_r_pickup",
+] instance=ExtResource( 1 )]
+position = Vector2( 32, 16 )
+
+[node name="Pickup" parent="Pickups" instance=ExtResource( 1 )]
+position = Vector2( 11, 17 )
+
+[node name="GuiRoot" type="Control" parent="."]
+margin_left = 2.0
+margin_right = 66.0
+margin_bottom = 64.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChargeContainer" type="HBoxContainer" parent="GuiRoot"]
+margin_left = -1.0
+margin_top = 1.0
+margin_right = 30.0
+margin_bottom = 7.0
+custom_constants/separation = -1
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Charge1" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_right = 11.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge1"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+value = 100.0
+percent_visible = false
+
+[node name="Charge2" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_left = 10.0
+margin_right = 21.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge2"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+value = 100.0
+percent_visible = false
+
+[node name="Charge3" type="PanelContainer" parent="GuiRoot/ChargeContainer"]
+margin_left = 20.0
+margin_right = 31.0
+margin_bottom = 6.0
+size_flags_horizontal = 3
+theme = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="GuiRoot/ChargeContainer/Charge3"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 10.0
+margin_bottom = 5.0
+size_flags_vertical = 1
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+value = 100.0
+percent_visible = false
+
+[node name="Score" type="Label" parent="GuiRoot"]
+margin_left = 32.0
+margin_top = -4.0
+margin_right = 62.0
+margin_bottom = 8.0
+custom_fonts/font = SubResource( 11 )
+text = "1"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathMeter" type="ProgressBar" parent="GuiRoot"]
+visible = false
+margin_left = -1.0
+margin_top = 8.0
+margin_right = 30.0
+margin_bottom = 11.0
+custom_styles/fg = SubResource( 12 )
+custom_styles/bg = SubResource( 13 )
+value = 50.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Panel" parent="GuiRoot"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -2.0
+margin_right = -2.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GuiRoot/GameOver"]
+margin_right = 64.0
+margin_bottom = 12.0
+custom_fonts/font = SubResource( 14 )
+text = "game over"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="Label" parent="GuiRoot/GameOver"]
+margin_top = 45.0
+margin_right = 64.0
+margin_bottom = 57.0
+custom_fonts/font = SubResource( 14 )
+text = "click to restart"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="GuiRoot/GameOver"]
+margin_top = 16.0
+margin_right = 64.0
+margin_bottom = 28.0
+custom_fonts/font = SubResource( 14 )
+text = "score: "
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScore" type="Label" parent="GuiRoot/GameOver"]
+margin_left = 1.0
+margin_top = 24.0
+margin_right = 65.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 14 )
+text = "new high score!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelUnlocked" type="Label" parent="GuiRoot/GameOver"]
+margin_left = 1.0
+margin_top = 34.0
+margin_right = 65.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 14 )
+text = "level unlocked!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="GuiRoot/GameOver"]
+margin_right = 64.0
+margin_bottom = 64.0
+theme = SubResource( 15 )
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_disabled = Color( 0.658824, 0.113725, 0.113725, 1 )
+custom_colors/font_color = Color( 0.407843, 0.945098, 0.27451, 1 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="body_entered" from="FireTemple/Colliders" to="." method="_on_Teleporters_body_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
+[connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
+[connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
+[connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
