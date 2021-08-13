@@ -12,6 +12,8 @@ export(float) var max_probability = 0
 
 export(NodePath) var score_path
 
+export(float) var marsh_deceleration
+
 var clicked = false
 var dying = false
 var max_charges = 3
@@ -106,7 +108,7 @@ func _draw():
     draw_circle($GolfBall.position.round(), 3, Color.white)
  
 
-func _process(_delta):
+func _process(delta):
     if charges > 0:
         guide_color = active_guide_color
     else:
@@ -114,6 +116,13 @@ func _process(_delta):
     score_node.text = str(score)
     if dying:
         $GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
+    
+    # if we're on the grass level
+    if $GrassLevel.visible:
+        # decelerate ball while it's in the "marsh"
+        if $GrassLevel/Colliders.overlaps_body($GolfBall):
+            var opposing_force = $GolfBall.linear_velocity.normalized().rotated(rad2deg(180))
+            $GolfBall.add_force(Vector2(), opposing_force*marsh_deceleration)
     update()
 
 
@@ -225,7 +234,9 @@ func game_over():
     else:
         $GuiRoot/GameOver/HighScore.text = "high score: " + str(high_score)
     # check if we unlocked a new level
-    if active_level < levels.size()-1 and score > $SaveData.unlock_thresholds[active_level]:
+    if active_level < levels.size()-1 and \
+       score > $SaveData.unlock_thresholds[active_level] and \
+       not $SaveData.data["unlocked"][active_level+1]:
         $SaveData.data["unlocked"][active_level+1] = true
         $SaveData.save_data()
     else:
@@ -253,9 +264,6 @@ func _on_EnemyTimer_timeout():
     elif(active_level == 3):
         $Pickups.stage4_movement()
     
-        
-    
-
 func _on_pickup_entered(area):
     _consume_pickup(area)
 

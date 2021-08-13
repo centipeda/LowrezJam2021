@@ -14,7 +14,7 @@ func _process(delta):
     update()
 
 func _draw():
-    draw_circle($Ball.position.round(), 3, Color.white)
+    draw_circle($Ball.position.round(), 2, Color.white)
 
 func _input(event):
     # check for mouse clicks...
