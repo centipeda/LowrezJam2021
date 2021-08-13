@@ -92,17 +92,85 @@ texture = ExtResource( 5 )
 position = Vector2( 6, 6 )
 shape = SubResource( 1 )
 
+[node name="TeleportParticles" type="CPUParticles2D" parent="FireTemple/Colliders/TeleporterTL"]
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.25
+randomness = 0.5
+emission_shape = 3
+emission_points = PoolVector2Array( 0, 0, 8, 8, 16, 16, 24, 24, 32, 32, 4, 4, 12, 12, 20, 20, 28, 28 )
+emission_colors = PoolColorArray(  )
+direction = Vector2( 1, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 0.51
+color = Color( 0.168627, 0.772549, 1, 1 )
+
 [node name="TeleporterTR" type="CollisionShape2D" parent="FireTemple/Colliders"]
 position = Vector2( 58, 6 )
 shape = SubResource( 1 )
+
+[node name="TeleportParticles" type="CPUParticles2D" parent="FireTemple/Colliders/TeleporterTR"]
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.25
+randomness = 0.5
+emission_shape = 3
+emission_points = PoolVector2Array( 0, 0, -8, 8, -16, 16, -24, 24, -32, 32, -4, 4, -12, 12, -20, 20, -28, 28 )
+emission_colors = PoolColorArray(  )
+direction = Vector2( 1, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 0.51
+color = Color( 0.168627, 0.772549, 1, 1 )
 
 [node name="TeleporterBL" type="CollisionShape2D" parent="FireTemple/Colliders"]
 position = Vector2( 6, 58 )
 shape = SubResource( 1 )
 
+[node name="TeleportParticles" type="CPUParticles2D" parent="FireTemple/Colliders/TeleporterBL"]
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.25
+randomness = 0.5
+emission_shape = 3
+emission_points = PoolVector2Array( 0, 0, 8, -8, 16, -16, 24, -24, 32, -32, 4, -4, 12, -12, 20, -20, 28, -28 )
+emission_colors = PoolColorArray(  )
+direction = Vector2( 1, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 0.51
+color = Color( 0.168627, 0.772549, 1, 1 )
+
 [node name="TeleporterBR" type="CollisionShape2D" parent="FireTemple/Colliders"]
 position = Vector2( 58, 58 )
 shape = SubResource( 1 )
+
+[node name="TeleportParticles" type="CPUParticles2D" parent="FireTemple/Colliders/TeleporterBR"]
+emitting = false
+amount = 100
+lifetime = 0.2
+one_shot = true
+explosiveness = 0.25
+randomness = 0.5
+emission_shape = 3
+emission_points = PoolVector2Array( 0, 0, -8, -8, -16, -16, -24, -24, -32, -32, -4, -4, -12, -12, -20, -20, -28, -28 )
+emission_colors = PoolColorArray(  )
+direction = Vector2( 1, -1 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+initial_velocity_random = 0.51
+color = Color( 0.168627, 0.772549, 1, 1 )
 
 [node name="TeleporterCenter" type="CollisionShape2D" parent="FireTemple/Colliders"]
 position = Vector2( 32, 32 )
