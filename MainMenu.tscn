@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
@@ -50,14 +50,6 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 
-
-[sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 4, 32 )
-
-[sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 32, 4 )
-
-
 [sub_resource type="Animation" id=13]
 resource_name = "idle_bob"
 length = 1.5
@@ -81,15 +73,14 @@ extents = Vector2( 13, 5 )
 [sub_resource type="RectangleShape2D" id=15]
 extents = Vector2( 4, 32 )
 
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 31, 4 )
+
 [sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 32, 4 )
 
-[sub_resource type="PhysicsMaterial" id=17]
-bounce = 0.5
-
-[sub_resource type="CircleShape2D" id=12]
+[sub_resource type="CircleShape2D" id=17]
 radius = 2.0
-
 
 [node name="MainMenu" type="Control"]
 script = ExtResource( 2 )
@@ -194,9 +185,7 @@ __meta__ = {
 
 [node name="Bob" type="AnimationPlayer" parent="StartMenu/Tutorial"]
 autoplay = "idle_bob"
-
 anims/idle_bob = SubResource( 13 )
-
 
 [node name="Title" type="TextureRect" parent="StartMenu"]
 margin_top = -6.0
@@ -235,31 +224,20 @@ shape = SubResource( 15 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
 position = Vector2( 32, -2 )
-
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( 32, 66 )
-
-[node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
-position = Vector2( 17, 5 )
-
-shape = SubResource( 16 )
+shape = SubResource( 18 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( 32, 66 )
+position = Vector2( 33, 66 )
 shape = SubResource( 16 )
 
-[node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
+[node name="Ball2" type="RigidBody2D" parent="StartMenu/BallLayer"]
 position = Vector2( 17, 5 )
-physics_material_override = SubResource( 17 )
-
-contacts_reported = 1
-contact_monitor = true
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Ball"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Ball2"]
+shape = SubResource( 17 )
 
 [node name="LevelMenu" type="Control" parent="."]
 visible = false
@@ -529,7 +507,7 @@ one_shot = true
 
 [connection signal="pressed" from="StartMenu/Start/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="StartMenu/Quit/QuitButton" to="." method="_on_QuitButton_pressed"]
-[connection signal="body_entered" from="StartMenu/BallLayer/Ball" to="." method="_on_Ball_body_entered"]
+[connection signal="body_entered" from="StartMenu/BallLayer/Ball2" to="." method="_on_Ball_body_entered"]
 [connection signal="mouse_entered" from="LevelMenu/Level1" to="." method="_on_Level1_mouse_entered"]
 [connection signal="mouse_exited" from="LevelMenu/Level1" to="." method="_on_Level_mouse_exited"]
 [connection signal="mouse_entered" from="LevelMenu/Level2" to="." method="_on_Level2_mouse_entered"]
