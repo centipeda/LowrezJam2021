@@ -18,7 +18,10 @@ export(NodePath) var settings_node_path
 
 export(float) var marsh_deceleration
 
+
 onready var settings_node = get_node(settings_node_path)
+
+var default_ball_damping = 1.5
 
 var draw_ball = true
 var clicked = false
@@ -139,9 +142,10 @@ func _input(event):
 			else:
 				_launch()
 				clicked = false
-	elif event is InputEventKey:
-		if event.scancode == KEY_ESCAPE:
-			game_over()
+	# elif event is InputEventKey:
+	#   if event.scancode == KEY_ESCAPE:
+	#       game_over()
+
 
 func _draw():
 	# draw the launch guideline if the left mouse button is down
@@ -169,15 +173,16 @@ func _process(delta):
 	# attempt to round off position of ball sprite so it doesn't look weird
 	$GolfBall/Sprite.position = $GolfBall.position.round() - $GolfBall.position
 	
+	update()
+
+func _physics_process(_delta):
 	# if we're on the grass level
 	if $GrassLevel.visible:
 		# decelerate ball while it's in the "marsh"
 		if $GrassLevel/Colliders.overlaps_body($GolfBall):
-			var opposing_force = $GolfBall.linear_velocity.normalized().rotated(rad2deg(180))
-			$GolfBall.add_force(Vector2(), opposing_force*marsh_deceleration)
-	update()
-
-
+			$GolfBall.linear_damp = default_ball_damping*3
+		else:
+			$GolfBall.linear_damp = default_ball_damping
 
 func load_level(load_level_idx):
 	var level
@@ -217,7 +222,7 @@ func _launch():
 
 
 func _consume_pickup(pickup):
-	print("consuming")
+	# print("consuming")
 	
 	#Start or continue combo
 	in_combo = true
@@ -311,7 +316,6 @@ func stop_death_countdown():
 	dying = false
 
 func game_over():
-	get_tree().paused = true
 	$SFX/LowHealth.stop()
 	$SFX/DeathNoise.play()
 
@@ -350,7 +354,7 @@ func _on_ChargeTimer_timeout():
 	game_over()
 
 func _on_SpawnTimer_timeout():
-	print($Pickups.get_child_count())
+	# print($Pickups.get_child_count())
 	var pickup_to_choose = choose_pickup()
 	$Pickups.add_pickup(pickup_types[pickup_to_choose])
 	
@@ -366,6 +370,10 @@ func _on_EnemyTimer_timeout():
 		$Pickups.stage3_movement()
 	elif(active_level == 3):
 		$Pickups.stage4_movement()
+	elif(active_level == 4):
+		$Pickups.stage5_movement()
+	elif(active_level == 5):
+		$Pickups.stage6_movement()
 	
 func _on_pickup_entered(area):
 	_consume_pickup(area)
@@ -390,6 +398,7 @@ func _on_Teleporters_body_entered(body):
 			$FireTemple/Colliders/TeleporterTL/TeleportParticles.emitting = true
 		# tell ball to teleport itself to the center
 		$GolfBall.teleport_to($GolfBall.TELEPORT_TO.CENTER)
+
 
 
 func _on_UseRetroMusicLabel_toggled(button_pressed):
@@ -438,3 +447,4 @@ func _on_UseRetroMusicLabel_toggled(button_pressed):
 		elif(active_level == 5):
 			$Music/IceTheme.play($Music/IceThemeRetro.get_playback_position())
 			$Music/IceThemeRetro.stop()
+

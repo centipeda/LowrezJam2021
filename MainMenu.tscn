@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://Music/GrassThemeRetro.wav" type="AudioStream" id=31]
 [ext_resource path="res://Music/IceTheme.wav" type="AudioStream" id=32]
 [ext_resource path="res://Music/IceThemeRetro.wav" type="AudioStream" id=33]
+[ext_resource path="res://frame.png" type="Texture" id=34]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.968627, 0.8, 1 )
@@ -91,26 +92,36 @@ game_scene = ExtResource( 3 )
 [node name="SaveData" parent="." instance=ExtResource( 5 )]
 
 [node name="StartMenu" type="Control" parent="."]
+visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="TextureRect" parent="StartMenu"]
-margin_top = -6.0
+[node name="ColorRect" type="ColorRect" parent="StartMenu"]
 margin_right = 64.0
-margin_bottom = 26.0
-texture = ExtResource( 13 )
+margin_bottom = 64.0
+color = Color( 0, 0, 0, 1 )
 __meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="StartMenu"]
+margin_right = 64.0
+margin_bottom = 64.0
+texture = ExtResource( 34 )
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Start" type="Panel" parent="StartMenu"]
 margin_left = 19.0
-margin_top = 24.0
+margin_top = 22.0
 margin_right = 45.0
-margin_bottom = 34.0
+margin_bottom = 32.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -136,9 +147,9 @@ __meta__ = {
 
 [node name="Quit" type="Panel" parent="StartMenu"]
 margin_left = 19.0
-margin_top = 42.0
+margin_top = 40.0
 margin_right = 45.0
-margin_bottom = 52.0
+margin_bottom = 50.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -177,6 +188,15 @@ __meta__ = {
 autoplay = "idle_bob"
 anims/idle_bob = SubResource( 12 )
 
+[node name="Title" type="TextureRect" parent="StartMenu"]
+margin_top = -6.0
+margin_right = 64.0
+margin_bottom = 26.0
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="BallLayer" type="Node2D" parent="StartMenu"]
 script = ExtResource( 12 )
 hit_strength = 200.0
@@ -184,31 +204,31 @@ hit_strength = 200.0
 [node name="StartButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/StartButtonCollider"]
-position = Vector2( 32, 29 )
+position = Vector2( 32, 27 )
 shape = SubResource( 7 )
 
 [node name="QuitButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/QuitButtonCollider"]
-position = Vector2( 31.9376, 47 )
+position = Vector2( 32, 45 )
 shape = SubResource( 7 )
 
 [node name="Walls" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( -4, 32 )
+position = Vector2( -2, 32 )
 shape = SubResource( 8 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( 68, 32 )
+position = Vector2( 66, 32 )
 shape = SubResource( 8 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( 32, -4 )
+position = Vector2( 32, -2 )
 shape = SubResource( 9 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
-position = Vector2( 32, 68 )
+position = Vector2( 32, 66 )
 shape = SubResource( 9 )
 
 [node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
@@ -224,10 +244,18 @@ __meta__ = {
 shape = SubResource( 11 )
 
 [node name="LevelMenu" type="Control" parent="."]
-visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="LevelMenu"]
+margin_right = 64.0
+margin_bottom = 64.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -243,6 +271,7 @@ __meta__ = {
 }
 
 [node name="HiScoreLabel" type="Label" parent="LevelMenu"]
+visible = false
 margin_top = 48.0
 margin_right = 64.0
 margin_bottom = 62.0
@@ -254,6 +283,7 @@ __meta__ = {
 }
 
 [node name="LevelLocked" type="Label" parent="LevelMenu"]
+visible = false
 margin_top = 51.0
 margin_right = 64.0
 margin_bottom = 65.0
@@ -265,6 +295,7 @@ __meta__ = {
 }
 
 [node name="HiScore" type="Label" parent="LevelMenu"]
+visible = false
 margin_top = 55.0
 margin_right = 64.0
 margin_bottom = 69.0

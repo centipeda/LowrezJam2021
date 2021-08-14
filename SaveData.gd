@@ -8,7 +8,7 @@ var save_filename
 var data = {}
 # scores at which the next level should be unlocked
 var unlock_thresholds = [
-	1, 1, 1, 1, 1
+	10, 10, 10, 10, 10
    ]
 
 # Called when the node enters the scene tree for the first time.
@@ -30,6 +30,7 @@ func _load_default_data():
 			0, 0, 0
 		],
 	}
+
 
 func save_data():
 	var save_game = File.new()
