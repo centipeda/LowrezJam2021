@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -105,6 +105,8 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxLine" id=20]
 
+[sub_resource type="StyleBoxEmpty" id=26]
+
 [sub_resource type="Theme" id=21]
 
 [sub_resource type="StyleBoxTexture" id=25]
@@ -125,6 +127,8 @@ charge_three_path = NodePath("Gui/GuiRoot/ChargeContainer/Charge3")
 active_guide_color = Color( 0.756863, 0.14902, 0.14902, 1 )
 inactive_guide_color = Color( 0.26, 0.052, 0.052, 1 )
 score_path = NodePath("Gui/GuiRoot/Score")
+use_retro_themes_path = NodePath("CanvasLayer/PauseMenu/Panel/UseRetroMusicButton/UseRetroMusicLabel")
+settings_node_path = NodePath("CanvasLayer/PauseMenu")
 marsh_deceleration = 2.0
 
 [node name="SaveData" parent="." instance=ExtResource( 13 )]
@@ -813,6 +817,7 @@ __meta__ = {
 }
 music_slider_path = NodePath("Panel/MusicVolumeSlider")
 sfx_slider_path = NodePath("Panel/SFXVolumeSlider")
+use_retro_button_path = NodePath("Panel/UseRetroMusicButton/UseRetroMusicLabel")
 
 [node name="Panel" type="Panel" parent="CanvasLayer/PauseMenu"]
 margin_right = 64.0
@@ -844,10 +849,10 @@ __meta__ = {
 }
 
 [node name="QuitButtonPanel" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
-margin_left = 34.0967
-margin_top = 54.2271
-margin_right = 61.0967
-margin_bottom = 63.2271
+margin_left = 34.0
+margin_top = 56.0
+margin_right = 61.0
+margin_bottom = 63.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -870,10 +875,10 @@ __meta__ = {
 }
 
 [node name="MainMenuButtonPanel" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
-margin_left = 2.18
-margin_top = 53.8937
-margin_right = 29.18
-margin_bottom = 62.8937
+margin_left = 2.0
+margin_top = 56.0
+margin_right = 29.0
+margin_bottom = 63.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -895,11 +900,44 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="UseRetroMusicButton" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 1.0
+margin_top = 46.5833
+margin_right = 62.0
+margin_bottom = 53.5833
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UseRetroMusicLabel" type="Button" parent="CanvasLayer/PauseMenu/Panel/UseRetroMusicButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 2.0
+margin_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/focus = SubResource( 26 )
+custom_styles/normal = SubResource( 20 )
+custom_fonts/font = ExtResource( 39 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+toggle_mode = true
+pressed = true
+text = "use alt music"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/PauseMenu/Panel"]
-margin_left = 2.16666
-margin_top = 18.5
-margin_right = 60.1667
-margin_bottom = 34.5
+margin_left = 2.0
+margin_top = 24.0
+margin_right = 60.0
+margin_bottom = 31.0
 theme = SubResource( 21 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
@@ -909,7 +947,6 @@ custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
 max_value = 10.0
-tick_count = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -923,11 +960,12 @@ custom_fonts/font = ExtResource( 39 )
 text = "Music volume"
 
 [node name="SFXVolumeSlider" type="HSlider" parent="CanvasLayer/PauseMenu/Panel"]
-margin_left = 1.91666
-margin_top = 32.75
-margin_right = 59.9167
-margin_bottom = 48.75
+margin_left = 2.0
+margin_top = 38.0
+margin_right = 60.0
+margin_bottom = 46.0
 theme = SubResource( 21 )
+custom_icons/tick = ExtResource( 41 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
 custom_icons/grabber = ExtResource( 41 )
@@ -936,7 +974,6 @@ custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
 max_value = 10.0
-tick_count = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -959,5 +996,6 @@ text = "SFX Volume"
 [connection signal="pressed" from="Gui/GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/QuitButtonPanel/QuitButton" to="CanvasLayer/PauseMenu" method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/MainMenuButtonPanel/MainMenu" to="CanvasLayer/PauseMenu" method="_on_MainMenu_pressed"]
+[connection signal="toggled" from="CanvasLayer/PauseMenu/Panel/UseRetroMusicButton/UseRetroMusicLabel" to="." method="_on_UseRetroMusicLabel_toggled"]
 [connection signal="value_changed" from="CanvasLayer/PauseMenu/Panel/MusicVolumeSlider" to="CanvasLayer/PauseMenu" method="_on_MusicVolumeSlider_value_changed"]
 [connection signal="value_changed" from="CanvasLayer/PauseMenu/Panel/SFXVolumeSlider" to="CanvasLayer/PauseMenu" method="_on_SFXVolumeSlider_value_changed"]

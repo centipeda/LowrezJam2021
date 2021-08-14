@@ -4,4 +4,3 @@
 
 [node name="SaveData" type="Node"]
 script = ExtResource( 1 )
-default_save_file = "game.save"

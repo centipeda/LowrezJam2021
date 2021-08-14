@@ -12,7 +12,13 @@ export(float) var max_probability = 0
 
 export(NodePath) var score_path
 
+export(NodePath) var use_retro_themes_path
+
+export(NodePath) var settings_node_path
+
 export(float) var marsh_deceleration
+
+onready var settings_node = get_node(settings_node_path)
 
 var draw_ball = true
 var clicked = false
@@ -26,6 +32,8 @@ var charge_timer
 var guide_color
 var score = 0
 var score_node
+var use_retro_themes_button
+var use_retro_themes = true
 var pickup_types = [
 	"basic_pickup",
 	"booster_pickup",
@@ -58,6 +66,9 @@ var levels = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	use_retro_themes_button = get_node(use_retro_themes_path)
+	use_retro_themes = use_retro_themes_button.pressed
+	
 	var last_rarity = 0
 	for n in range(0, pickup_drop_rarities.size()):
 		cumulative_pickup_rarities.append(pickup_drop_rarities[n] + last_rarity)
@@ -72,21 +83,38 @@ func _ready():
 					get_node(charge_three_path).get_child(0)]
 	score_node = get_node(score_path)
 	
+	settings_node.load_settings()
+	_on_UseRetroMusicLabel_toggled(use_retro_themes)
 	
 	#Play music corresponding to level - 
 	#Switch all defaults to chiptune for final release
-	if(active_level == 0):
-		$Music/FireThemeRetro.play()
-	elif(active_level == 1):
-		$Music/DesertThemeRetro.play()
-	elif(active_level == 2):
-		$Music/GrassThemeRetro.play()
-	elif(active_level == 3):
-		$Music/IceThemeRetro.play()
-	elif(active_level == 4):
-		$Music/FireTheme.play()
-	elif(active_level == 5):
-		$Music/IceTheme.play()
+#	if use_retro_themes == true:
+#		if(active_level == 0):
+#			$Music/FireThemeRetro.play()
+#		elif(active_level == 1):
+#			$Music/DesertThemeRetro.play()
+#		elif(active_level == 2):
+#			$Music/GrassThemeRetro.play()
+#		elif(active_level == 3):
+#			$Music/IceThemeRetro.play()
+#		elif(active_level == 4):
+#			$Music/FireThemeRetro.play()
+#		elif(active_level == 5):
+#			$Music/IceThemeRetro.play()
+#	else:
+#		if(active_level == 0):
+#			$Music/FireTheme.play()
+#		elif(active_level == 1):
+#			$Music/DesertTheme.play()
+#		elif(active_level == 2):
+#			$Music/GrassTheme.play()
+#		elif(active_level == 3):
+#			$Music/IceTheme.play()
+#		elif(active_level == 4):
+#			$Music/FireTheme.play()
+#		elif(active_level == 5):
+#			$Music/IceTheme.play()
+
 
 func sum_array(array):
 	var sum = 0.0
@@ -362,3 +390,51 @@ func _on_Teleporters_body_entered(body):
 			$FireTemple/Colliders/TeleporterTL/TeleportParticles.emitting = true
 		# tell ball to teleport itself to the center
 		$GolfBall.teleport_to($GolfBall.TELEPORT_TO.CENTER)
+
+
+func _on_UseRetroMusicLabel_toggled(button_pressed):
+	use_retro_themes = button_pressed
+	
+	if use_retro_themes:
+		use_retro_themes_button.text = "use alt music"
+	else:
+		use_retro_themes_button.text = "use retro music"
+	
+	if use_retro_themes == true:
+		if(active_level == 0):
+			$Music/FireThemeRetro.play($Music/FireTheme.get_playback_position())
+			$Music/FireTheme.stop()
+		elif(active_level == 1):
+			$Music/DesertThemeRetro.play($Music/DesertTheme.get_playback_position())
+			$Music/DesertTheme.stop()
+		elif(active_level == 2):
+			$Music/GrassThemeRetro.play($Music/GrassTheme.get_playback_position())
+			$Music/GrassTheme.stop()
+		elif(active_level == 3):
+			$Music/IceThemeRetro.play($Music/IceTheme.get_playback_position())
+			$Music/IceTheme.stop()
+		elif(active_level == 4):
+			$Music/FireThemeRetro.play($Music/FireTheme.get_playback_position())
+			$Music/FireTheme.stop()
+		elif(active_level == 5):
+			$Music/IceThemeRetro.play($Music/IceTheme.get_playback_position())
+			$Music/IceTheme.stop()
+	else:
+		if(active_level == 0):
+			$Music/FireTheme.play($Music/FireThemeRetro.get_playback_position())
+			$Music/FireThemeRetro.stop()
+		elif(active_level == 1):
+			$Music/DesertTheme.play($Music/DesertThemeRetro.get_playback_position())
+			$Music/DesertThemeRetro.stop()
+		elif(active_level == 2):
+			$Music/GrassTheme.play($Music/GrassThemeRetro.get_playback_position())
+			$Music/GrassThemeRetro.stop()
+		elif(active_level == 3):
+			$Music/IceTheme.play($Music/IceThemeRetro.get_playback_position())
+			$Music/IceThemeRetro.stop()
+		elif(active_level == 4):
+			$Music/FireTheme.play($Music/FireThemeRetro.get_playback_position())
+			$Music/FireThemeRetro.stop()
+		elif(active_level == 5):
+			$Music/IceTheme.play($Music/IceThemeRetro.get_playback_position())
+			$Music/IceThemeRetro.stop()
