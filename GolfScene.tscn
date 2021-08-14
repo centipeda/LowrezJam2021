@@ -231,7 +231,6 @@ polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 
 disabled = true
 
 [node name="GrassLevel" type="Node2D" parent="."]
-visible = false
 z_index = -5
 
 [node name="GrassLevel" type="Sprite" parent="GrassLevel"]
@@ -283,6 +282,7 @@ texture = ExtResource( 10 )
 [node name="Colliders" type="StaticBody2D" parent="CPUTemple"]
 
 [node name="WindowTemple" type="Node2D" parent="."]
+visible = false
 
 [node name="WindowTemple" type="Sprite" parent="WindowTemple"]
 position = Vector2( 32.175, 32.356 )
@@ -350,6 +350,7 @@ shape = SubResource( 6 )
 [node name="DeathAnimationTimer" type="Timer" parent="."]
 pause_mode = 2
 wait_time = 1.25
+one_shot = true
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
@@ -481,10 +482,10 @@ __meta__ = {
 }
 
 [node name="ChargeContainer" type="HBoxContainer" parent="Gui/GuiRoot"]
-margin_left = -1.0
-margin_top = 1.0
-margin_right = 30.0
-margin_bottom = 7.0
+margin_left = 18.0
+margin_top = 57.0
+margin_right = 43.0
+margin_bottom = 61.0
 custom_constants/separation = -1
 __meta__ = {
 "_edit_group_": true,
@@ -492,8 +493,8 @@ __meta__ = {
 }
 
 [node name="Charge1" type="PanelContainer" parent="Gui/GuiRoot/ChargeContainer"]
-margin_right = 11.0
-margin_bottom = 6.0
+margin_right = 9.0
+margin_bottom = 4.0
 size_flags_horizontal = 3
 theme = SubResource( 7 )
 custom_styles/panel = SubResource( 8 )
@@ -504,8 +505,8 @@ __meta__ = {
 [node name="ProgressBar" type="ProgressBar" parent="Gui/GuiRoot/ChargeContainer/Charge1"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 10.0
-margin_bottom = 5.0
+margin_right = 8.0
+margin_bottom = 3.0
 size_flags_vertical = 1
 custom_styles/fg = SubResource( 9 )
 custom_styles/bg = SubResource( 10 )
@@ -513,9 +514,9 @@ value = 100.0
 percent_visible = false
 
 [node name="Charge2" type="PanelContainer" parent="Gui/GuiRoot/ChargeContainer"]
-margin_left = 10.0
-margin_right = 21.0
-margin_bottom = 6.0
+margin_left = 8.0
+margin_right = 17.0
+margin_bottom = 4.0
 size_flags_horizontal = 3
 theme = SubResource( 7 )
 custom_styles/panel = SubResource( 8 )
@@ -526,8 +527,8 @@ __meta__ = {
 [node name="ProgressBar" type="ProgressBar" parent="Gui/GuiRoot/ChargeContainer/Charge2"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 10.0
-margin_bottom = 5.0
+margin_right = 8.0
+margin_bottom = 3.0
 size_flags_vertical = 1
 custom_styles/fg = SubResource( 9 )
 custom_styles/bg = SubResource( 10 )
@@ -535,9 +536,9 @@ value = 100.0
 percent_visible = false
 
 [node name="Charge3" type="PanelContainer" parent="Gui/GuiRoot/ChargeContainer"]
-margin_left = 20.0
-margin_right = 31.0
-margin_bottom = 6.0
+margin_left = 16.0
+margin_right = 25.0
+margin_bottom = 4.0
 size_flags_horizontal = 3
 theme = SubResource( 7 )
 custom_styles/panel = SubResource( 8 )
@@ -548,8 +549,8 @@ __meta__ = {
 [node name="ProgressBar" type="ProgressBar" parent="Gui/GuiRoot/ChargeContainer/Charge3"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 10.0
-margin_bottom = 5.0
+margin_right = 8.0
+margin_bottom = 3.0
 size_flags_vertical = 1
 custom_styles/fg = SubResource( 9 )
 custom_styles/bg = SubResource( 10 )
@@ -570,10 +571,10 @@ __meta__ = {
 
 [node name="DeathMeter" type="ProgressBar" parent="Gui/GuiRoot"]
 visible = false
-margin_left = -1.0
-margin_top = 8.0
-margin_right = 30.0
-margin_bottom = 11.0
+margin_left = 19.0
+margin_top = 54.0
+margin_right = 41.0
+margin_bottom = 56.0
 custom_styles/fg = SubResource( 12 )
 custom_styles/bg = SubResource( 13 )
 value = 50.0
@@ -593,6 +594,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ColorRect2" type="ColorRect" parent="Gui/GuiRoot/GameOver"]
+margin_right = 64.0
+margin_bottom = 64.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
 [node name="Label" type="Label" parent="Gui/GuiRoot/GameOver"]
 margin_right = 64.0
 margin_bottom = 12.0
@@ -600,15 +610,29 @@ custom_fonts/font = SubResource( 14 )
 text = "game over"
 align = 1
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Restart" type="Label" parent="Gui/GuiRoot/GameOver"]
-margin_top = 45.0
-margin_right = 64.0
-margin_bottom = 57.0
+margin_left = 1.0
+margin_top = 43.0
+margin_right = 65.0
+margin_bottom = 55.0
 custom_fonts/font = SubResource( 14 )
-text = "click to restart"
+text = "click to"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart2" type="Label" parent="Gui/GuiRoot/GameOver"]
+margin_left = -1.0
+margin_top = 50.0
+margin_right = 63.0
+margin_bottom = 62.0
+custom_fonts/font = SubResource( 14 )
+text = " return to title"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -658,6 +682,7 @@ custom_colors/font_color_disabled = Color( 0.658824, 0.113725, 0.113725, 1 )
 custom_colors/font_color = Color( 0.407843, 0.945098, 0.27451, 1 )
 flat = true
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 

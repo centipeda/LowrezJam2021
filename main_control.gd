@@ -14,6 +14,7 @@ export(NodePath) var score_path
 
 export(float) var marsh_deceleration
 
+var default_ball_damping = 1.5
 var draw_ball = true
 var clicked = false
 var dying = false
@@ -140,15 +141,16 @@ func _process(delta):
     # attempt to round off position of ball sprite so it doesn't look weird
     $GolfBall/Sprite.position = $GolfBall.position.round() - $GolfBall.position
     
+    update()
+
+func _physics_process(_delta):
     # if we're on the grass level
     if $GrassLevel.visible:
         # decelerate ball while it's in the "marsh"
         if $GrassLevel/Colliders.overlaps_body($GolfBall):
-            var opposing_force = $GolfBall.linear_velocity.normalized().rotated(rad2deg(180))
-            $GolfBall.add_force(Vector2(), opposing_force*marsh_deceleration)
-    update()
-
-
+            $GolfBall.linear_damp = default_ball_damping*3
+        else:
+            $GolfBall.linear_damp = default_ball_damping
 
 func load_level(load_level_idx):
     var level
@@ -188,7 +190,7 @@ func _launch():
 
 
 func _consume_pickup(pickup):
-    print("consuming")
+    # print("consuming")
     
     #Start or continue combo
     in_combo = true
@@ -321,7 +323,7 @@ func _on_ChargeTimer_timeout():
     game_over()
 
 func _on_SpawnTimer_timeout():
-    print($Pickups.get_child_count())
+    # print($Pickups.get_child_count())
     var pickup_to_choose = choose_pickup()
     $Pickups.add_pickup(pickup_types[pickup_to_choose])
     
