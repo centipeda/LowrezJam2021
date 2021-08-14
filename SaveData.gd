@@ -2,6 +2,8 @@ extends Node
 
 export(String) var default_save_file
 
+# disable save data if this is true
+var reset = false
 var save_filename
 var data = {}
 # scores at which the next level should be unlocked
@@ -35,7 +37,7 @@ func save_data():
 # load the save data, loading default data if a save file doesn't exist
 func load_data():
 	var save_game = File.new()
-	if not save_game.file_exists(save_filename):
+	if not save_game.file_exists(save_filename) or reset:
 		data = _load_default_data()
 		return
 	save_game.open(save_filename, File.READ)

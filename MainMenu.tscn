@@ -1,16 +1,18 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://GolfScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Thumbnails/DesertThumbnail.png" type="Texture" id=4]
 [ext_resource path="res://SaveData.tscn" type="PackedScene" id=5]
-[ext_resource path="res://lock.png" type="Texture" id=6]
+[ext_resource path="res://Menu Assets/lock.png" type="Texture" id=6]
 [ext_resource path="res://Thumbnails/GrasslandThumbnail.png" type="Texture" id=7]
 [ext_resource path="res://Thumbnails/CPUTempleThumbnail.png" type="Texture" id=8]
 [ext_resource path="res://Thumbnails/FireTempleThumbnail.png" type="Texture" id=9]
 [ext_resource path="res://Thumbnails/IceThumbnail.png" type="Texture" id=10]
 [ext_resource path="res://Thumbnails/WindowTempleThumbnail.png" type="Texture" id=11]
+[ext_resource path="res://BallLayer.gd" type="Script" id=12]
+[ext_resource path="res://Menu Assets/title_white.png" type="Texture" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0.968627, 0.8, 1 )
@@ -27,6 +29,21 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 13, 5 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 4, 32 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 32, 4 )
+
+[sub_resource type="PhysicsMaterial" id=10]
+bounce = 0.5
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 2.0
+
 [node name="MainMenu" type="Control"]
 script = ExtResource( 2 )
 __meta__ = {
@@ -37,18 +54,26 @@ game_scene = ExtResource( 3 )
 [node name="SaveData" parent="." instance=ExtResource( 5 )]
 
 [node name="StartMenu" type="Control" parent="."]
-visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Title" type="TextureRect" parent="StartMenu"]
+margin_top = -6.0
+margin_right = 64.0
+margin_bottom = 26.0
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Start" type="Panel" parent="StartMenu"]
-margin_left = 21.0
-margin_top = 21.0
-margin_right = 43.0
-margin_bottom = 30.0
+margin_left = 19.0
+margin_top = 24.0
+margin_right = 45.0
+margin_bottom = 34.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -56,8 +81,8 @@ __meta__ = {
 }
 
 [node name="StartButton" type="Button" parent="StartMenu/Start"]
-margin_right = 22.0
-margin_bottom = 9.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_styles/hover = SubResource( 2 )
@@ -68,16 +93,15 @@ custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "start"
 flat = true
-align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Quit" type="Panel" parent="StartMenu"]
-margin_left = 21.0
-margin_top = 32.0
-margin_right = 43.0
-margin_bottom = 41.0
+margin_left = 19.0
+margin_top = 42.0
+margin_right = 45.0
+margin_bottom = 52.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true,
@@ -85,8 +109,8 @@ __meta__ = {
 }
 
 [node name="QuitButton" type="Button" parent="StartMenu/Quit"]
-margin_right = 23.0
-margin_bottom = 9.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_styles/hover = SubResource( 5 )
@@ -101,7 +125,52 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BallLayer" type="Node2D" parent="StartMenu"]
+script = ExtResource( 12 )
+hit_strength = 200.0
+
+[node name="StartButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/StartButtonCollider"]
+position = Vector2( 32, 29 )
+shape = SubResource( 7 )
+
+[node name="QuitButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/QuitButtonCollider"]
+position = Vector2( 32, 47 )
+shape = SubResource( 7 )
+
+[node name="Walls" type="StaticBody2D" parent="StartMenu/BallLayer"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
+position = Vector2( -4, 32 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
+position = Vector2( 68, 32 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
+position = Vector2( 32, -4 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
+position = Vector2( 32, 68 )
+shape = SubResource( 9 )
+
+[node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
+position = Vector2( 17, 5 )
+physics_material_override = SubResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Ball"]
+shape = SubResource( 11 )
+
 [node name="LevelMenu" type="Control" parent="."]
+visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {
