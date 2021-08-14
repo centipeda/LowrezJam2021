@@ -158,7 +158,7 @@ shape = SubResource( 7 )
 [node name="QuitButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/QuitButtonCollider"]
-position = Vector2( 32, 47 )
+position = Vector2( 31.9376, 47 )
 shape = SubResource( 7 )
 
 [node name="Walls" type="StaticBody2D" parent="StartMenu/BallLayer"]

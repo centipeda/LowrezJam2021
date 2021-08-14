@@ -72,7 +72,8 @@ func _ready():
 	score_node = get_node(score_path)
 	
 	
-	#Play music corresponding to level
+	#Play music corresponding to level - 
+	#Switch all defaults to chiptune for final release
 	if(active_level == 0):
 		$Music/FireThemeRetro.play()
 	elif(active_level == 1):

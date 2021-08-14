@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -37,6 +37,8 @@
 [ext_resource path="res://SFX/Pickup2.wav" type="AudioStream" id=35]
 [ext_resource path="res://SFX/Pickup3.wav" type="AudioStream" id=36]
 [ext_resource path="res://SFX/Pickup1.wav" type="AudioStream" id=37]
+[ext_resource path="res://PauseMenu.gd" type="Script" id=38]
+[ext_resource path="res://Fonts/pixel_font_pause_menu_data.tres" type="DynamicFont" id=39]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 2 )
@@ -89,6 +91,16 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=16]
 font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.0588235, 0.0588235, 0.0588235, 0.792157 )
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
+
+[sub_resource type="StyleBoxFlat" id=19]
+
+[sub_resource type="StyleBoxLine" id=20]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -230,6 +242,7 @@ polygon = PoolVector2Array( 60, 60, 60, 51, 58, 48, 58, 34, 61, 26, 61, 17, 59, 
 disabled = true
 
 [node name="GrassLevel" type="Node2D" parent="."]
+visible = false
 z_index = -5
 
 [node name="GrassLevel" type="Sprite" parent="GrassLevel"]
@@ -608,6 +621,13 @@ stream = ExtResource( 25 )
 [node name="GetPickup5" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 34 )
 
+[node name="Control" type="Control" parent="SFX/GetPickup5"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="LowHealth" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 33 )
 
@@ -632,9 +652,74 @@ stream = ExtResource( 31 )
 [node name="UpVolume" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 28 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 38 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PauseMenu"]
+margin_right = 64.0
+margin_bottom = 64.0
+custom_styles/panel = SubResource( 17 )
+
+[node name="Paused" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 0.166664
+margin_top = 2.5
+margin_right = 64.1667
+margin_bottom = 16.5
+custom_fonts/font = ExtResource( 39 )
+text = "Paused"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpaceToUnpause" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_top = 10.0
+margin_right = 64.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 39 )
+text = "space to resume"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 18.68
+margin_top = 52.8104
+margin_right = 45.68
+margin_bottom = 61.8104
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/PauseMenu/Panel/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 2.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/normal = SubResource( 20 )
+custom_fonts/font = ExtResource( 39 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+text = "Quit"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="body_entered" from="FireTemple/Colliders" to="." method="_on_Teleporters_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_ChargeTimer_timeout"]
 [connection signal="timeout" from="EnemyTimer" to="." method="_on_EnemyTimer_timeout"]
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
 [connection signal="pressed" from="GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/Panel/QuitButton" to="CanvasLayer/PauseMenu" method="_on_QuitButton_pressed"]
