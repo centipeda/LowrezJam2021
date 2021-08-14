@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -24,7 +24,7 @@
 [ext_resource path="res://Music/IceThemeRetro.wav" type="AudioStream" id=22]
 [ext_resource path="res://SFX/DownVolume.wav" type="AudioStream" id=23]
 [ext_resource path="res://SFX/MaxPowerup.wav" type="AudioStream" id=24]
-[ext_resource path="res://SFX/GetPickup.wav" type="AudioStream" id=25]
+[ext_resource path="res://SFX/Pickup4.wav" type="AudioStream" id=25]
 [ext_resource path="res://SFX/Start.wav" type="AudioStream" id=26]
 [ext_resource path="res://SFX/Explosion.wav" type="AudioStream" id=27]
 [ext_resource path="res://SFX/UpVolume.wav" type="AudioStream" id=28]
@@ -33,6 +33,10 @@
 [ext_resource path="res://SFX/Teleport.wav" type="AudioStream" id=31]
 [ext_resource path="res://SFX/Select2.wav" type="AudioStream" id=32]
 [ext_resource path="res://SFX/LowHealth.wav" type="AudioStream" id=33]
+[ext_resource path="res://SFX/Pickup5.wav" type="AudioStream" id=34]
+[ext_resource path="res://SFX/Pickup2.wav" type="AudioStream" id=35]
+[ext_resource path="res://SFX/Pickup3.wav" type="AudioStream" id=36]
+[ext_resource path="res://SFX/Pickup1.wav" type="AudioStream" id=37]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 2 )
@@ -548,27 +552,35 @@ __meta__ = {
 
 [node name="DesertThemeRetro" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 17 )
+volume_db = -10.314
 
 [node name="DesertTheme" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 18 )
+volume_db = -10.314
 
 [node name="FireTheme" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 16 )
+volume_db = -10.314
 
 [node name="FireThemeRetro" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 14 )
+volume_db = -10.314
 
 [node name="GrassTheme" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 15 )
+volume_db = -10.314
 
 [node name="GrassThemeRetro" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 20 )
+volume_db = -10.314
 
 [node name="IceTheme" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 21 )
+volume_db = -10.314
 
 [node name="IceThemeRetro" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 22 )
+volume_db = -10.314
 
 [node name="SFX" type="Node" parent="."]
 
@@ -582,7 +594,19 @@ stream = ExtResource( 23 )
 stream = ExtResource( 27 )
 
 [node name="GetPickup" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 37 )
+
+[node name="GetPickup2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 35 )
+
+[node name="GetPickup3" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 36 )
+
+[node name="GetPickup4" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 25 )
+
+[node name="GetPickup5" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 34 )
 
 [node name="LowHealth" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 33 )

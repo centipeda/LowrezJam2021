@@ -16,6 +16,8 @@ export(float) var marsh_deceleration
 
 var clicked = false
 var dying = false
+var in_combo = false
+var combo_counter = 0
 var max_charges = 3
 var charges = 3
 var charge_nodes
@@ -80,9 +82,9 @@ func _ready():
 	elif(active_level == 3):
 		$Music/IceThemeRetro.play()
 	elif(active_level == 4):
-		$Music/FireThemeRetro.play()
+		$Music/FireTheme.play()
 	elif(active_level == 5):
-		$Music/FireThemeRetro.play()
+		$Music/IceTheme.play()
 
 func sum_array(array):
 	var sum = 0.0
@@ -167,6 +169,8 @@ func deplete_charge():
 			start_death_countdown()
 
 func _launch():
+	in_combo = false
+	combo_counter = 0
 	if charges > 0:
 		deplete_charge()
 		# apply an impulse to the ball in the direction of the mouse from the ball
@@ -179,6 +183,40 @@ func _launch():
 
 func _consume_pickup(pickup):
 	print("consuming")
+	
+	#Start or continue combo
+	in_combo = true
+	
+	
+	#play appropriate sound
+	if pickup.is_in_group("max_pickup"):
+		combo_counter += 1
+		$SFX/MaxPowerup.play()
+		score += 5
+	elif pickup.is_in_group("danger_pickup"):
+		$SFX/TakeHit.play()
+	else:
+		combo_counter += 1
+		match combo_counter:
+			1:
+				$SFX/GetPickup.play()
+				score += 1
+			2:
+				$SFX/GetPickup2.play()
+				score += 2
+			3:
+				$SFX/GetPickup3.play()
+				score += 2
+			4:
+				$SFX/GetPickup4.play()
+				score += 3
+			5:
+				$SFX/GetPickup5.play()
+				score += 5
+				combo_counter = 0
+			_:
+				$SFX/GetPickup5.play()
+				score += 5
 	
 	if pickup.is_in_group("danger_pickup"):
 		$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*200)
@@ -195,7 +233,7 @@ func _consume_pickup(pickup):
 	elif pickup.is_in_group("max_pickup"):
 		max_out_charges()
 		pickup.queue_free()
-		score += 5
+		# score += 5
 	else:
 		if pickup.is_in_group("booster_pickup"):
 			$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*100)
@@ -207,7 +245,7 @@ func _consume_pickup(pickup):
 			$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
 		
 		pickup.queue_free()
-		score += 1
+		# score += 1
 		
 		if charges < max_charges:
 			add_charge()
@@ -228,14 +266,18 @@ func max_out_charges():
 func start_death_countdown():
 	$ChargeTimer.start()
 	$GuiRoot/DeathMeter.visible = true
+	$SFX/LowHealth.play()
 	dying = true
 
 func stop_death_countdown():
 	$ChargeTimer.stop()
 	$GuiRoot/DeathMeter.visible = false
+	$SFX/LowHealth.stop()
 	dying = false
 	
 func game_over():
+	$SFX/LowHealth.stop()
+	$SFX/DeathNoise.play()
 	var high_score = int($SaveData.data["high_scores"][active_level])
 	# check if we have new level high score
 	$GuiRoot/GameOver.visible = true
@@ -290,6 +332,7 @@ func _on_RestartButton_pressed():
 # determine how the teleporters function
 func _on_Teleporters_body_entered(body):
 	# determine which teleporter was entered
+	$SFX/Teleport.play()
 	if body.is_in_group("player"):
 		if body.position.x < 16 and body.position.y > 48:
 			$FireTemple/Colliders/TeleporterBL/TeleportParticles.emitting = true

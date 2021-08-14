@@ -46,10 +46,13 @@ func _input(event):
 				emit_signal("load_level", active_level)
 
 func _on_StartButton_pressed():
+	$SFX/Start.play()
 	$StartMenu.visible = false
 	$LevelMenu.visible = true
+	$StartTimer.start()
 
 func _on_QuitButton_pressed():
+	$SFX/DeathNoise.play()
 	get_tree().quit()
 
 func _level_enter(level_idx):
@@ -60,6 +63,8 @@ func _level_enter(level_idx):
 		$LevelMenu/HiScoreLabel.visible = false
 		$LevelMenu/LevelLocked.visible = true
 	else:
+		if $StartTimer.time_left == 0:
+			$SFX/Select1.play()
 		active_level = level_idx
 		$LevelMenu/HiScore.visible = true
 		$LevelMenu/HiScoreLabel.visible = true
