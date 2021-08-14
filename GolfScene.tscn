@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -38,6 +38,10 @@
 [ext_resource path="res://SFX/Pickup3.wav" type="AudioStream" id=36]
 [ext_resource path="res://SFX/Pickup1.wav" type="AudioStream" id=37]
 [ext_resource path="res://ball.png" type="Texture" id=38]
+[ext_resource path="res://Fonts/pixel_font_pause_menu_data.tres" type="DynamicFont" id=39]
+[ext_resource path="res://PauseMenu.gd" type="Script" id=40]
+[ext_resource path="res://UI Assets/WhiteBar1.png" type="Texture" id=41]
+[ext_resource path="res://UI Assets/VolumeSlider.png" type="Texture" id=42]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 2 )
@@ -90,6 +94,26 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=16]
 font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=17]
+bg_color = Color( 0.0588235, 0.0588235, 0.0588235, 0.792157 )
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
+
+[sub_resource type="StyleBoxFlat" id=19]
+
+[sub_resource type="StyleBoxLine" id=20]
+
+[sub_resource type="Theme" id=21]
+
+[sub_resource type="StyleBoxTexture" id=25]
+texture = ExtResource( 42 )
+region_rect = Rect2( 0, 0, 56, 6 )
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 3 )
@@ -390,6 +414,46 @@ pause_mode = 2
 [node name="DesertThemeRetro" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 17 )
 volume_db = -10.314
+bus = "Music"
+
+[node name="DesertTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 18 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="FireTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 16 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="FireThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 14 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="GrassTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 15 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="GrassThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 20 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="IceTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 21 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="IceThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 22 )
+volume_db = -10.314
+bus = "Music"
+
+[node name="DesertThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 17 )
+volume_db = -10.314
 
 [node name="DesertTheme" type="AudioStreamPlayer" parent="Music"]
 stream = ExtResource( 18 )
@@ -421,6 +485,77 @@ volume_db = -10.314
 
 [node name="SFX" type="Node" parent="."]
 pause_mode = 2
+
+[node name="DeathNoise" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 19 )
+bus = "SFX"
+
+[node name="DownVolume" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 23 )
+bus = "SFX"
+
+[node name="Explosion" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 27 )
+bus = "SFX"
+
+[node name="GetPickup" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 37 )
+bus = "SFX"
+
+[node name="GetPickup2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 35 )
+bus = "SFX"
+
+[node name="GetPickup3" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 36 )
+bus = "SFX"
+
+[node name="GetPickup4" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 25 )
+bus = "SFX"
+
+[node name="GetPickup5" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 34 )
+bus = "SFX"
+
+[node name="Control" type="Control" parent="SFX/GetPickup5"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LowHealth" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 33 )
+bus = "SFX"
+
+[node name="MaxPowerup" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 24 )
+bus = "SFX"
+
+[node name="Select1" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 29 )
+bus = "SFX"
+
+[node name="Select2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 32 )
+bus = "SFX"
+
+[node name="Start" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 26 )
+bus = "SFX"
+
+[node name="TakeHit" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 30 )
+bus = "SFX"
+
+[node name="Teleport" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 31 )
+bus = "SFX"
+
+[node name="UpVolume" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 28 )
+bus = "SFX"
 
 [node name="DeathNoise" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource( 19 )
@@ -686,6 +821,159 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Music" type="Node" parent="."]
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 40 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+music_slider_path = NodePath("Panel/MusicVolumeSlider")
+sfx_slider_path = NodePath("Panel/SFXVolumeSlider")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/PauseMenu"]
+margin_right = 64.0
+margin_bottom = 64.0
+custom_styles/panel = SubResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paused" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_right = 64.0
+margin_bottom = 8.0
+custom_fonts/font = ExtResource( 39 )
+text = "Paused"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpaceToUnpause" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_top = 7.0
+margin_right = 64.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 39 )
+text = "space to resume"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitButtonPanel" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 34.0967
+margin_top = 54.2271
+margin_right = 61.0967
+margin_bottom = 63.2271
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/PauseMenu/Panel/QuitButtonPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/normal = SubResource( 20 )
+custom_fonts/font = ExtResource( 39 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+text = "Quit"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenuButtonPanel" type="Panel" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 2.18
+margin_top = 53.8937
+margin_right = 29.18
+margin_bottom = 62.8937
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" type="Button" parent="CanvasLayer/PauseMenu/Panel/MainMenuButtonPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/hover = SubResource( 18 )
+custom_styles/pressed = SubResource( 19 )
+custom_styles/normal = SubResource( 20 )
+custom_fonts/font = ExtResource( 39 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.85098, 0.85098, 0.85098, 1 )
+text = "Menu"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicVolumeSlider" type="HSlider" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 2.16666
+margin_top = 18.5
+margin_right = 60.1667
+margin_bottom = 34.5
+theme = SubResource( 21 )
+custom_icons/grabber_disabled = ExtResource( 41 )
+custom_icons/grabber_highlight = ExtResource( 41 )
+custom_icons/grabber = ExtResource( 41 )
+custom_styles/slider = SubResource( 25 )
+custom_styles/grabber_area_highlight = SubResource( 23 )
+custom_styles/grabber_area = SubResource( 24 )
+min_value = -15.0
+max_value = 10.0
+tick_count = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicVolumeLabel" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 1.41666
+margin_top = 17.25
+margin_right = 53.4167
+margin_bottom = 25.25
+custom_fonts/font = ExtResource( 39 )
+text = "Music volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 1.91666
+margin_top = 32.75
+margin_right = 59.9167
+margin_bottom = 48.75
+theme = SubResource( 21 )
+custom_icons/grabber_disabled = ExtResource( 41 )
+custom_icons/grabber_highlight = ExtResource( 41 )
+custom_icons/grabber = ExtResource( 41 )
+custom_styles/slider = SubResource( 25 )
+custom_styles/grabber_area_highlight = SubResource( 23 )
+custom_styles/grabber_area = SubResource( 24 )
+min_value = -15.0
+max_value = 10.0
+tick_count = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SFXVolumeLabel" type="Label" parent="CanvasLayer/PauseMenu/Panel"]
+margin_left = 1.0
+margin_top = 30.6667
+margin_right = 53.0
+margin_bottom = 38.6667
+custom_fonts/font = ExtResource( 39 )
+text = "SFX Volume"
+
 [connection signal="body_entered" from="FireTemple/Colliders" to="." method="_on_Teleporters_body_entered"]
 [connection signal="timeout" from="DeathAnimationTimer" to="." method="game_over_screen"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
@@ -694,3 +982,7 @@ __meta__ = {
 [connection signal="pickup_entered" from="Pickups" to="." method="_on_pickup_entered"]
 [connection signal="finished" from="SFX/DeathNoise" to="." method="game_over2"]
 [connection signal="pressed" from="Gui/GuiRoot/GameOver/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/QuitButtonPanel/QuitButton" to="CanvasLayer/PauseMenu" method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Panel/MainMenuButtonPanel/MainMenu" to="CanvasLayer/PauseMenu" method="_on_MainMenu_pressed"]
+[connection signal="value_changed" from="CanvasLayer/PauseMenu/Panel/MusicVolumeSlider" to="CanvasLayer/PauseMenu" method="_on_MusicVolumeSlider_value_changed"]
+[connection signal="value_changed" from="CanvasLayer/PauseMenu/Panel/SFXVolumeSlider" to="CanvasLayer/PauseMenu" method="_on_SFXVolumeSlider_value_changed"]
