@@ -14,6 +14,7 @@ export(NodePath) var score_path
 
 export(float) var marsh_deceleration
 
+var default_ball_damping = 1.5
 var draw_ball = true
 var clicked = false
 var dying = false
@@ -73,7 +74,8 @@ func _ready():
 	score_node = get_node(score_path)
 	
 	
-	#Play music corresponding to level
+	#Play music corresponding to level - 
+	#Switch all defaults to chiptune for final release
 	if(active_level == 0):
 		$Music/FireThemeRetro.play()
 	elif(active_level == 1):
@@ -110,9 +112,10 @@ func _input(event):
 			else:
 				_launch()
 				clicked = false
-	elif event is InputEventKey:
-		if event.scancode == KEY_ESCAPE:
-			game_over()
+	# elif event is InputEventKey:
+	#   if event.scancode == KEY_ESCAPE:
+	#       game_over()
+
 
 func _draw():
 	# draw the launch guideline if the left mouse button is down
@@ -140,15 +143,16 @@ func _process(delta):
 	# attempt to round off position of ball sprite so it doesn't look weird
 	$GolfBall/Sprite.position = $GolfBall.position.round() - $GolfBall.position
 	
+	update()
+
+func _physics_process(_delta):
 	# if we're on the grass level
 	if $GrassLevel.visible:
 		# decelerate ball while it's in the "marsh"
 		if $GrassLevel/Colliders.overlaps_body($GolfBall):
-			var opposing_force = $GolfBall.linear_velocity.normalized().rotated(rad2deg(180))
-			$GolfBall.add_force(Vector2(), opposing_force*marsh_deceleration)
-	update()
-
-
+			$GolfBall.linear_damp = default_ball_damping*3
+		else:
+			$GolfBall.linear_damp = default_ball_damping
 
 func load_level(load_level_idx):
 	var level
@@ -188,7 +192,7 @@ func _launch():
 
 
 func _consume_pickup(pickup):
-	print("consuming")
+	# print("consuming")
 	
 	#Start or continue combo
 	in_combo = true
@@ -228,7 +232,7 @@ func _consume_pickup(pickup):
 		$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*200)
 		$GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(randi() % 360))
 		
-		pickup.queue_free()
+		pickup.consume()
 		if charges > 0:
 			deplete_charge()
 		elif dying:
@@ -238,7 +242,7 @@ func _consume_pickup(pickup):
 	
 	elif pickup.is_in_group("max_pickup"):
 		max_out_charges()
-		pickup.queue_free()
+		pickup.consume()
 		# score += 5
 	else:
 		if pickup.is_in_group("booster_pickup"):
@@ -250,7 +254,7 @@ func _consume_pickup(pickup):
 			$GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
 			$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
 		
-		pickup.queue_free()
+		pickup.consume()
 		# score += 1
 		
 		if charges < max_charges:
@@ -282,7 +286,6 @@ func stop_death_countdown():
 	dying = false
 
 func game_over():
-	get_tree().paused = true
 	$SFX/LowHealth.stop()
 	$SFX/DeathNoise.play()
 
@@ -321,7 +324,7 @@ func _on_ChargeTimer_timeout():
 	game_over()
 
 func _on_SpawnTimer_timeout():
-	print($Pickups.get_child_count())
+	# print($Pickups.get_child_count())
 	var pickup_to_choose = choose_pickup()
 	$Pickups.add_pickup(pickup_types[pickup_to_choose])
 	
