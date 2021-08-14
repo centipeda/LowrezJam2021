@@ -66,6 +66,20 @@ func _ready():
 					get_node(charge_two_path).get_child(0), 
 					get_node(charge_three_path).get_child(0)]
 	score_node = get_node(score_path)
+	
+	#Play music corresponding to level
+	if(active_level == 0):
+		$Music/FireThemeRetro.play()
+	elif(active_level == 1):
+		$Music/DesertThemeRetro.play()
+	elif(active_level == 2):
+		$Music/GrassThemeRetro.play()
+	elif(active_level == 3):
+		$Music/IceThemeRetro.play()
+	elif(active_level == 4):
+		$Music/FireThemeRetro.play()
+	elif(active_level == 5):
+		$Music/FireThemeRetro.play()
 
 func sum_array(array):
 	var sum = 0.0

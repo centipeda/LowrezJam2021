@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Music/FireThemeRetro.wav" type="AudioStream" id=1]
+[ext_resource path="res://Music/GrassTheme.wav" type="AudioStream" id=2]
+[ext_resource path="res://Music/FireTheme.wav" type="AudioStream" id=3]
+[ext_resource path="res://Music/DesertThemeRetro.wav" type="AudioStream" id=4]
+[ext_resource path="res://Music/DesertTheme.wav" type="AudioStream" id=5]
+[ext_resource path="res://Music/GrassThemeRetro.wav" type="AudioStream" id=6]
+[ext_resource path="res://Music/IceTheme.wav" type="AudioStream" id=7]
+[ext_resource path="res://Music/IceThemeRetro.wav" type="AudioStream" id=8]
+
+[node name="Music" type="Node"]
+
+[node name="DesertThemeRetro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="DesertTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="FireTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="FireThemeRetro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="GrassTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="GrassThemeRetro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="IceTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="IceThemeRetro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )

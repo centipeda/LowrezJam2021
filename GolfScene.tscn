@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -13,6 +13,26 @@
 [ext_resource path="res://Backgrounds/WindowTemple.png" type="Texture" id=11]
 [ext_resource path="res://GolfBall.gd" type="Script" id=12]
 [ext_resource path="res://SaveData.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Music/FireThemeRetro.wav" type="AudioStream" id=14]
+[ext_resource path="res://Music/GrassTheme.wav" type="AudioStream" id=15]
+[ext_resource path="res://Music/FireTheme.wav" type="AudioStream" id=16]
+[ext_resource path="res://Music/DesertThemeRetro.wav" type="AudioStream" id=17]
+[ext_resource path="res://Music/DesertTheme.wav" type="AudioStream" id=18]
+[ext_resource path="res://SFX/DeathNoise.wav" type="AudioStream" id=19]
+[ext_resource path="res://Music/GrassThemeRetro.wav" type="AudioStream" id=20]
+[ext_resource path="res://Music/IceTheme.wav" type="AudioStream" id=21]
+[ext_resource path="res://Music/IceThemeRetro.wav" type="AudioStream" id=22]
+[ext_resource path="res://SFX/DownVolume.wav" type="AudioStream" id=23]
+[ext_resource path="res://SFX/MaxPowerup.wav" type="AudioStream" id=24]
+[ext_resource path="res://SFX/GetPickup.wav" type="AudioStream" id=25]
+[ext_resource path="res://SFX/Start.wav" type="AudioStream" id=26]
+[ext_resource path="res://SFX/Explosion.wav" type="AudioStream" id=27]
+[ext_resource path="res://SFX/UpVolume.wav" type="AudioStream" id=28]
+[ext_resource path="res://SFX/Select1.wav" type="AudioStream" id=29]
+[ext_resource path="res://SFX/TakeHit.wav" type="AudioStream" id=30]
+[ext_resource path="res://SFX/Teleport.wav" type="AudioStream" id=31]
+[ext_resource path="res://SFX/Select2.wav" type="AudioStream" id=32]
+[ext_resource path="res://SFX/LowHealth.wav" type="AudioStream" id=33]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 2 )
@@ -455,6 +475,70 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Music" type="Node" parent="."]
+
+[node name="DesertThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 17 )
+
+[node name="DesertTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 18 )
+
+[node name="FireTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 16 )
+
+[node name="FireThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 14 )
+
+[node name="GrassTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 15 )
+
+[node name="GrassThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 20 )
+
+[node name="IceTheme" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 21 )
+
+[node name="IceThemeRetro" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 22 )
+
+[node name="SFX" type="Node" parent="."]
+
+[node name="DeathNoise" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 19 )
+
+[node name="DownVolume" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 23 )
+
+[node name="Explosion" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 27 )
+
+[node name="GetPickup" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 25 )
+
+[node name="LowHealth" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 33 )
+
+[node name="MaxPowerup" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 24 )
+
+[node name="Select1" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 29 )
+
+[node name="Select2" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 32 )
+
+[node name="Start" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 26 )
+
+[node name="TakeHit" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 30 )
+
+[node name="Teleport" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 31 )
+
+[node name="UpVolume" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource( 28 )
 
 [connection signal="body_entered" from="FireTemple/Colliders" to="." method="_on_Teleporters_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]

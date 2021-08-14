@@ -1,0 +1,52 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://SFX/DownVolume.wav" type="AudioStream" id=1]
+[ext_resource path="res://SFX/MaxPowerup.wav" type="AudioStream" id=2]
+[ext_resource path="res://SFX/GetPickup.wav" type="AudioStream" id=3]
+[ext_resource path="res://SFX/Start.wav" type="AudioStream" id=4]
+[ext_resource path="res://SFX/Explosion.wav" type="AudioStream" id=5]
+[ext_resource path="res://SFX/DeathNoise.wav" type="AudioStream" id=6]
+[ext_resource path="res://SFX/UpVolume.wav" type="AudioStream" id=7]
+[ext_resource path="res://SFX/Select1.wav" type="AudioStream" id=8]
+[ext_resource path="res://SFX/TakeHit.wav" type="AudioStream" id=9]
+[ext_resource path="res://SFX/Teleport.wav" type="AudioStream" id=10]
+[ext_resource path="res://SFX/Select2.wav" type="AudioStream" id=11]
+[ext_resource path="res://SFX/LowHealth.wav" type="AudioStream" id=12]
+
+[node name="SFX" type="Node"]
+
+[node name="DeathNoise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="DownVolume" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="GetPickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="LowHealth" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[node name="MaxPowerup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="Select1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="Select2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Start" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="TakeHit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="Teleport" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="UpVolume" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )

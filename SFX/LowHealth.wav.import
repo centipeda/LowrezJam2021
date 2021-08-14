@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/LowHealth.wav-db0e8ebfc2016191ab2276ef0e53f46e.sample"
+
+[deps]
+
+source_file="res://SFX/LowHealth.wav"
+dest_files=[ "res://.import/LowHealth.wav-db0e8ebfc2016191ab2276ef0e53f46e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
