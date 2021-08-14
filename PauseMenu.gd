@@ -41,6 +41,7 @@ func save_settings():
 	SaveData.save_data()
 
 func load_settings():
+	SaveData.load_data()
 	music_slider.value = SaveData.data["settings"][0]
 	sfx_slider.value = SaveData.data["settings"][1]
 	use_retro_button.pressed = SaveData.data["settings"][2]
@@ -53,8 +54,8 @@ func _on_QuitButton_pressed():
 
 
 func _on_MainMenu_pressed():
-	save_settings()
 	get_tree().paused = false
+	save_settings()
 	paused = false
 	visible = false
 	get_tree().change_scene("res://World.tscn")
