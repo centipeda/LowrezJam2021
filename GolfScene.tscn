@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://Pickup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pickups.gd" type="Script" id=2]
@@ -106,11 +106,11 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxLine" id=20]
 
-[sub_resource type="StyleBoxEmpty" id=26]
+[sub_resource type="StyleBoxEmpty" id=25]
 
 [sub_resource type="Theme" id=21]
 
-[sub_resource type="StyleBoxTexture" id=27]
+[sub_resource type="StyleBoxTexture" id=26]
 texture = ExtResource( 42 )
 region_rect = Rect2( 0, 0, 56, 6 )
 
@@ -809,7 +809,6 @@ __meta__ = {
 
 [node name="PauseMenu" type="Control" parent="CanvasLayer"]
 pause_mode = 2
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 40 )
@@ -921,7 +920,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_styles/hover = SubResource( 18 )
 custom_styles/pressed = SubResource( 19 )
-custom_styles/focus = SubResource( 26 )
+custom_styles/focus = SubResource( 25 )
 custom_styles/normal = SubResource( 20 )
 custom_fonts/font = ExtResource( 39 )
 custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
@@ -943,7 +942,7 @@ theme = SubResource( 21 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
 custom_icons/grabber = ExtResource( 41 )
-custom_styles/slider = SubResource( 27 )
+custom_styles/slider = SubResource( 26 )
 custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
@@ -970,7 +969,7 @@ custom_icons/tick = ExtResource( 41 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
 custom_icons/grabber = ExtResource( 41 )
-custom_styles/slider = SubResource( 27 )
+custom_styles/slider = SubResource( 26 )
 custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
