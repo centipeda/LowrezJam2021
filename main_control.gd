@@ -14,6 +14,7 @@ export(NodePath) var score_path
 
 export(float) var marsh_deceleration
 
+var draw_ball = true
 var clicked = false
 var dying = false
 var in_combo = false
@@ -123,17 +124,22 @@ func _draw():
 		draw_line(endpoint, $GolfBall.position, guide_color, 2)
 		#draw_polygon([endpoint, p1, p2], [guide_color, guide_color, guide_color])
 	# draw the golf ball
-	draw_circle($GolfBall.position.round(), 3, Color.white)
+	# draw_circle($GolfBall.position.round(), 3, Color.white)
  
 
 func _process(delta):
+	# set guide color
 	if charges > 0:
 		guide_color = active_guide_color
 	else:
 		guide_color = inactive_guide_color
 	score_node.text = str(score)
+	# set death meter percentage
 	if dying:
-		$GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
+		$Gui/GuiRoot/DeathMeter.value = $ChargeTimer.time_left / $ChargeTimer.wait_time * 100
+	
+	# attempt to round off position of ball sprite so it doesn't look weird
+	$GolfBall/Sprite.position = $GolfBall.position.round() - $GolfBall.position
 	
 	# if we're on the grass level
 	if $GrassLevel.visible:
@@ -223,7 +229,7 @@ func _consume_pickup(pickup):
 		$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*200)
 		$GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(randi() % 360))
 		
-		pickup.queue_free()
+		pickup.consume()
 		if charges > 0:
 			deplete_charge()
 		elif dying:
@@ -233,7 +239,7 @@ func _consume_pickup(pickup):
 	
 	elif pickup.is_in_group("max_pickup"):
 		max_out_charges()
-		pickup.queue_free()
+		pickup.consume()
 		# score += 5
 	else:
 		if pickup.is_in_group("booster_pickup"):
@@ -245,7 +251,7 @@ func _consume_pickup(pickup):
 			$GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
 			$GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
 		
-		pickup.queue_free()
+		pickup.consume()
 		# score += 1
 		
 		if charges < max_charges:
@@ -266,31 +272,41 @@ func max_out_charges():
 
 func start_death_countdown():
 	$ChargeTimer.start()
-	$GuiRoot/DeathMeter.visible = true
+	$Gui/GuiRoot/DeathMeter.visible = true
 	$SFX/LowHealth.play()
 	dying = true
 
 func stop_death_countdown():
 	$ChargeTimer.stop()
-	$GuiRoot/DeathMeter.visible = false
+	$Gui/GuiRoot/DeathMeter.visible = false
 	$SFX/LowHealth.stop()
 	dying = false
-	
+
 func game_over():
+	get_tree().paused = true
 	$SFX/LowHealth.stop()
 	$SFX/DeathNoise.play()
+
+func game_over2():
+	$SFX/Explosion.play()
+	$GolfBall/DeathParticles.emitting = true
+	$GolfBall/Sprite.visible = false
+	$DeathAnimationTimer.start()
+
+func game_over_screen():
+	get_tree().paused = false
 	var high_score = int($SaveData.data["high_scores"][active_level])
 	# check if we have new level high score
-	$GuiRoot/GameOver.visible = true
-	$GuiRoot/GameOver/Score.text = "score: " + str(score)
+	$Gui/GuiRoot/GameOver.visible = true
+	$Gui/GuiRoot/GameOver/Score.text = "score: " + str(score)
 	# update data if we got a new high score
 	if score > high_score:
 		$SaveData.data["high_scores"][active_level] = score
 		$SaveData.save_data()
-		$GuiRoot/GameOver/HighScore.text = "new high score!"
+		$Gui/GuiRoot/GameOver/HighScore.text = "new high score!"
 	# otherwise just show the old high score
 	else:
-		$GuiRoot/GameOver/HighScore.text = "high score: " + str(high_score)
+		$Gui/GuiRoot/GameOver/HighScore.text = "high score: " + str(high_score)
 	# check if we unlocked a new level
 	if active_level < levels.size()-1 and \
 	   score > $SaveData.unlock_thresholds[active_level] and \
@@ -298,8 +314,9 @@ func game_over():
 		$SaveData.data["unlocked"][active_level+1] = true
 		$SaveData.save_data()
 	else:
-		$GuiRoot/GameOver/LevelUnlocked.visible = false
+		$Gui/GuiRoot/GameOver/LevelUnlocked.visible = false
 	get_tree().paused = true
+
 
 func _on_ChargeTimer_timeout():
 	game_over()

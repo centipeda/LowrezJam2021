@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Fonts/pixel_font_data.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu.gd" type="Script" id=2]
@@ -48,6 +48,23 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
+
+[sub_resource type="Animation" id=12]
+resource_name = "idle_bob"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.75, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 53 ), Vector2( 0, 54 ), Vector2( 0, 53 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 13, 5 )
@@ -145,6 +162,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Tutorial" type="Label" parent="StartMenu"]
+margin_top = 53.5
+margin_right = 64.0
+margin_bottom = 67.4993
+custom_fonts/font = ExtResource( 1 )
+text = "click to move!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bob" type="AnimationPlayer" parent="StartMenu/Tutorial"]
+autoplay = "idle_bob"
+anims/idle_bob = SubResource( 12 )
+
 [node name="BallLayer" type="Node2D" parent="StartMenu"]
 script = ExtResource( 12 )
 hit_strength = 200.0
@@ -182,6 +214,8 @@ shape = SubResource( 9 )
 [node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
 position = Vector2( 17, 5 )
 physics_material_override = SubResource( 10 )
+contacts_reported = 1
+contact_monitor = true
 __meta__ = {
 "_edit_group_": true
 }
@@ -445,6 +479,7 @@ one_shot = true
 
 [connection signal="pressed" from="StartMenu/Start/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="StartMenu/Quit/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="body_entered" from="StartMenu/BallLayer/Ball" to="." method="_on_Ball_body_entered"]
 [connection signal="mouse_entered" from="LevelMenu/Level1" to="." method="_on_Level1_mouse_entered"]
 [connection signal="mouse_exited" from="LevelMenu/Level1" to="." method="_on_Level_mouse_exited"]
 [connection signal="mouse_entered" from="LevelMenu/Level2" to="." method="_on_Level2_mouse_entered"]
