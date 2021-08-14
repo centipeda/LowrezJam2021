@@ -49,6 +49,7 @@ func _on_StartButton_pressed():
     $SFX/Start.play()
     $StartMenu.visible = false
     $LevelMenu.visible = true
+    $StartMenu/BallLayer/Ball/CollisionShape2D.disabled = true
     $StartTimer.start()
 
 func _on_QuitButton_pressed():
@@ -90,3 +91,7 @@ func _on_Level_mouse_exited():
     $LevelMenu/HiScore.visible = false
     $LevelMenu/HiScoreLabel.visible = false
     active_level = -1
+
+
+func _on_Ball_body_entered(body):
+    $SFX/TakeHit.play()

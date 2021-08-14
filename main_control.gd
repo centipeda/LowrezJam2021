@@ -228,7 +228,7 @@ func _consume_pickup(pickup):
         $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*200)
         $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(randi() % 360))
         
-        pickup.queue_free()
+        pickup.consume()
         if charges > 0:
             deplete_charge()
         elif dying:
@@ -238,7 +238,7 @@ func _consume_pickup(pickup):
     
     elif pickup.is_in_group("max_pickup"):
         max_out_charges()
-        pickup.queue_free()
+        pickup.consume()
         # score += 5
     else:
         if pickup.is_in_group("booster_pickup"):
@@ -250,7 +250,7 @@ func _consume_pickup(pickup):
             $GolfBall.linear_velocity = $GolfBall.linear_velocity.rotated(deg2rad(90))
             $GolfBall.apply_impulse(Vector2(), $GolfBall.linear_velocity.normalized()*25)
         
-        pickup.queue_free()
+        pickup.consume()
         # score += 1
         
         if charges < max_charges:

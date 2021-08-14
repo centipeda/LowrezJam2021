@@ -4,6 +4,7 @@ signal pickup_entered(area)
 
 var color = Color.white
 var velocity = Vector2()
+var dead = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,16 +21,20 @@ func _ready():
         color = Color.gold
     elif is_in_group("danger_pickup"):
         color = Color.black
+    $DeathParticles.color = color
 
 func _process(delta):
     position = position + velocity * delta
     if position.x < -48 or position.x > 64+48 or \
        position.y < -48 or position.y > 64+48:
         queue_free()
+    if dead and not $DeathParticles.emitting:
+        queue_free()
     update()
 
 func _draw():
-    draw_circle(Vector2(), 2, color)
+    if not dead:
+        draw_circle(Vector2(), 2, color)
 
 # detect when we've been collided with
 func _on_Pickup_body_entered(body):
@@ -40,3 +45,7 @@ func connect_parent():
     # connect this scene to its parent so it can signal the main scene...
     # this seems somehow hacky, but I can't figure a better way to do it
     connect("pickup_entered", get_parent(), "_on_pickup_body_entered")
+
+func consume():
+    $DeathParticles.emitting = true
+    dead = true
