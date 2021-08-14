@@ -4,6 +4,7 @@ export(PackedScene) var menu_scene
 export(PackedScene) var game_scene
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     add_child(menu_scene.instance())

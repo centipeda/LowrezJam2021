@@ -36,7 +36,7 @@
 [ext_resource path="res://frame.png" type="Texture" id=34]
 
 [sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 1, 1, 1, 1 )
+bg_color = Color( 1, 0.968627, 0.8, 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
@@ -64,7 +64,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.75, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 52 ), Vector2( 0, 53 ), Vector2( 0, 52 ) ]
+"values": [ Vector2( 0, 53 ), Vector2( 0, 54 ), Vector2( 0, 53 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=8]
