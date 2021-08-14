@@ -107,7 +107,7 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="Theme" id=21]
 
-[sub_resource type="StyleBoxTexture" id=25]
+[sub_resource type="StyleBoxTexture" id=22]
 texture = ExtResource( 42 )
 region_rect = Rect2( 0, 0, 56, 6 )
 
@@ -322,7 +322,6 @@ texture = ExtResource( 6 )
 [node name="GolfBall" type="RigidBody2D" parent="." groups=[
 "player",
 ]]
-pause_mode = 2
 position = Vector2( 32, 48 )
 physics_material_override = SubResource( 3 )
 contacts_reported = 1
@@ -337,7 +336,6 @@ __meta__ = {
 shape = SubResource( 4 )
 
 [node name="DeathParticles" type="CPUParticles2D" parent="GolfBall"]
-pause_mode = 2
 emitting = false
 amount = 50
 lifetime = 0.5
@@ -617,6 +615,7 @@ __meta__ = {
 }
 
 [node name="ChargeContainer" type="HBoxContainer" parent="Gui/GuiRoot"]
+modulate = Color( 1, 1, 1, 0.321569 )
 margin_left = 18.0
 margin_top = 57.0
 margin_right = 43.0
@@ -929,7 +928,7 @@ theme = SubResource( 21 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
 custom_icons/grabber = ExtResource( 41 )
-custom_styles/slider = SubResource( 25 )
+custom_styles/slider = SubResource( 22 )
 custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
@@ -956,7 +955,7 @@ theme = SubResource( 21 )
 custom_icons/grabber_disabled = ExtResource( 41 )
 custom_icons/grabber_highlight = ExtResource( 41 )
 custom_icons/grabber = ExtResource( 41 )
-custom_styles/slider = SubResource( 25 )
+custom_styles/slider = SubResource( 22 )
 custom_styles/grabber_area_highlight = SubResource( 23 )
 custom_styles/grabber_area = SubResource( 24 )
 min_value = -15.0
