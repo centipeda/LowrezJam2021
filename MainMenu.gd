@@ -11,7 +11,7 @@ var level_names = [
     "grassland",
     "ice floes",
     "cpu temple",
-    "window temple"
+    "window"
    ]
 var active_level = -1
 

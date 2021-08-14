@@ -50,7 +50,7 @@ bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=7]
 resource_name = "idle_bob"
 length = 1.5
 loop = true
@@ -67,19 +67,19 @@ tracks/0/keys = {
 "values": [ Vector2( 0, 52 ), Vector2( 0, 53 ), Vector2( 0, 52 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 13, 5 )
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 4, 32 )
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 32, 4 )
 
-[sub_resource type="PhysicsMaterial" id=10]
+[sub_resource type="PhysicsMaterial" id=11]
 bounce = 0.5
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=12]
 radius = 2.0
 
 [node name="MainMenu" type="Control"]
@@ -92,7 +92,6 @@ game_scene = ExtResource( 3 )
 [node name="SaveData" parent="." instance=ExtResource( 5 )]
 
 [node name="StartMenu" type="Control" parent="."]
-visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {
@@ -186,7 +185,7 @@ __meta__ = {
 
 [node name="Bob" type="AnimationPlayer" parent="StartMenu/Tutorial"]
 autoplay = "idle_bob"
-anims/idle_bob = SubResource( 12 )
+anims/idle_bob = SubResource( 7 )
 
 [node name="Title" type="TextureRect" parent="StartMenu"]
 margin_top = -6.0
@@ -205,35 +204,35 @@ hit_strength = 200.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/StartButtonCollider"]
 position = Vector2( 32, 27 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="QuitButtonCollider" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/QuitButtonCollider"]
 position = Vector2( 32, 45 )
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="Walls" type="StaticBody2D" parent="StartMenu/BallLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
 position = Vector2( -2, 32 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
 position = Vector2( 66, 32 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
 position = Vector2( 32, -2 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StartMenu/BallLayer/Walls"]
 position = Vector2( 32, 66 )
-shape = SubResource( 9 )
+shape = SubResource( 10 )
 
 [node name="Ball" type="RigidBody2D" parent="StartMenu/BallLayer"]
 position = Vector2( 17, 5 )
-physics_material_override = SubResource( 10 )
+physics_material_override = SubResource( 11 )
 contacts_reported = 1
 contact_monitor = true
 __meta__ = {
@@ -241,9 +240,10 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StartMenu/BallLayer/Ball"]
-shape = SubResource( 11 )
+shape = SubResource( 12 )
 
 [node name="LevelMenu" type="Control" parent="."]
+visible = false
 margin_right = 64.0
 margin_bottom = 64.0
 __meta__ = {

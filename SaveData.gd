@@ -25,7 +25,7 @@ func _load_default_data():
         ],
         "unlocked": [
             true, false, false, false, false, false
-        ]
+        ]   
     }
 
 func save_data():

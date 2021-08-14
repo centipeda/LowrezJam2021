@@ -14,6 +14,7 @@ export(NodePath) var score_path
 
 export(float) var marsh_deceleration
 
+var starting = true
 var default_ball_damping = 1.5
 var draw_ball = true
 var clicked = false
@@ -88,6 +89,20 @@ func _ready():
         $Music/FireTheme.play()
     elif(active_level == 5):
         $Music/IceTheme.play()
+    
+    $StartTimer.start()
+    $SpawnTimer.start()
+    $EnemyTimer.start()
+
+func _pre_init_game():
+    $Gui/GuiRoot/Ready.text = "go!"
+    $SFX/GetPickup4.play()
+    $StartTimer2.start()
+    
+func init_game():
+    $SFX/GetPickup4.stop()
+    $Gui/GuiRoot/Ready.visible = false
+    starting = false
 
 func sum_array(array):
     var sum = 0.0
@@ -103,6 +118,8 @@ func choose_pickup():
     return pickup_type
 
 func _input(event):
+    if starting:
+        return
     # check for mouse clicks...
     # if we clicked and released then launch the ball
     if event is InputEventMouseButton:
